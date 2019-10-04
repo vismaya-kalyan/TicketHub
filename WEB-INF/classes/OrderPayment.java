@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.*;
 
+
 /* 
 	OrderPayment class contains class variables username,ordername,price,image,address,creditcardno.
 
@@ -9,23 +10,22 @@ import java.io.*;
 	OrderPayment  class contains getters and setters for username,ordername,price,image,address,creditcardno
 */
 
-public class OrderPayment implements Serializable {
+public class OrderPayment implements Serializable{
 	private int orderId;
 	private String userName;
 	private String orderName;
 	private double orderPrice;
 	private String userAddress;
 	private String creditCardNo;
-
-	public OrderPayment(int orderId, String userName, String orderName, double orderPrice, String userAddress,
-			String creditCardNo) {
-		this.orderId = orderId;
-		this.userName = userName;
-		this.orderName = orderName;
-		this.orderPrice = orderPrice;
-		this.userAddress = userAddress;
-		this.creditCardNo = creditCardNo;
-	}
+	
+	public OrderPayment(int orderId,String userName,String orderName,double orderPrice,String userAddress,String creditCardNo){
+		this.orderId=orderId;
+		this.userName=userName;
+		this.orderName=orderName;
+	 	this.orderPrice=orderPrice;
+		this.userAddress=userAddress;
+	 	this.creditCardNo=creditCardNo;
+		}
 
 	public String getUserAddress() {
 		return userAddress;
@@ -67,6 +67,7 @@ public class OrderPayment implements Serializable {
 		this.orderId = orderId;
 	}
 
+
 	public double getOrderPrice() {
 		return orderPrice;
 	}
@@ -74,9 +75,6 @@ public class OrderPayment implements Serializable {
 	public void setOrderPrice(double orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-
-	public String toString() {
-		return "User Name: " + getUserName() + "\n Order ID: " + getOrderId();
-	}
+	
 
 }
