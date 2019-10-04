@@ -53,7 +53,7 @@ public class Utilities extends HttpServlet {
 		String result = HtmlToString(file);
 		// to print the right navigation in header of username cart and logout etc
 		if (file == "Header.html") {
-			result = result + "<div id='menu' style='float: right;'><ul>";
+			// result = result + "<div id='menu' style='float: right;'><ul>";
 			if (session.getAttribute("username") != null) {
 				String username = session.getAttribute("username").toString();
 				username = Character.toUpperCase(username.charAt(0)) + username.substring(1);
