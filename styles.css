@@ -17,34 +17,6 @@ body {
 	padding:0;
 }
 
-
-/* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
-	float: left;
-	width: 50%;
-	height: 200px;
-	padding: 5px;
-  }
-  
-  /* Clear floats after image containers */
-  .row::after {
-	content: "";
-	height: 100px;
-	clear: both;
-	display: table;
-  }
-/** element defaults **/
-
-/* .img {
-    position: relative;
-    float: left;
-    width:  200px;
-    height: 200px;
-    background-position: 50% 50%;
-    background-repeat:   no-repeat;
-    background-size:     cover;
-} */
-
 table {
 	width: 100%;
 	text-align: left;
@@ -105,6 +77,7 @@ a:hover {
 
 a:focus {
 	outline: none;
+	text-decoration:none
 }
 
 
@@ -120,16 +93,19 @@ a.button {
 
 a.button:hover {
 	color: #fff;
+	text-decoration:none
 }
 
 a.button-reversed { 
     background-color: #ddd;
 	border-bottom-color: #999;
 	color: #666;
+	text-decoration: none;
 }
 
 a.button-reversed:hover {
 	color: #333;
+	text-decoration: none;
 }
 
 fieldset {
@@ -313,7 +289,12 @@ nav ul li.selected a,
 nav ul li.selected a:hover {
 	color: #fff;
 }
-
+.entry img{
+	margin-top: 50px;
+		width:150px;
+		height: 150px;
+		border-radius: 15%;
+}
 img {
 	max-width: 100%;
 	height: auto;
