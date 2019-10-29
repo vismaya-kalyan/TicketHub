@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
+
+
 body {
 	background: #fff;
 	margin:0;
@@ -15,7 +17,6 @@ body {
 	padding:0;
 }
 
-/** element defaults **/
 table {
 	width: 100%;
 	text-align: left;
@@ -71,10 +72,12 @@ a {
 a:hover {
 	border-bottom-color: #333;
 	color: #333;
+	text-decoration:none
 }
 
 a:focus {
 	outline: none;
+	text-decoration:none
 }
 
 
@@ -90,16 +93,19 @@ a.button {
 
 a.button:hover {
 	color: #fff;
+	text-decoration:none
 }
 
 a.button-reversed { 
     background-color: #ddd;
 	border-bottom-color: #999;
 	color: #666;
+	text-decoration: none;
 }
 
 a.button-reversed:hover {
 	color: #333;
+	text-decoration: none;
 }
 
 fieldset {
@@ -240,7 +246,7 @@ header h1 a, header h1 a:hover {
     letter-spacing: -2px;
     background-color: rgba(0, 0, 0, 0.8);
     border-bottom: none;
-
+text-decoration:none
 }
 
 
@@ -248,7 +254,7 @@ nav {
 	height: 80px;
 	margin-bottom: 30px;
 	width: 100%;
-	background-color: #3882D6;
+	background-color: #000000;
 	box-shadow: 0px 4px 5px #e0e0e0;
 	border-bottom: 1px solid #fff;
 }
@@ -283,7 +289,12 @@ nav ul li.selected a,
 nav ul li.selected a:hover {
 	color: #fff;
 }
-
+.entry img{
+	margin-top: 50px;
+		width:150px;
+		height: 150px;
+		border-radius: 15%;
+}
 img {
 	max-width: 100%;
 	height: auto;
