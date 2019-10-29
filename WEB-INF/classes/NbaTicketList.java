@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/NflTicketList")
+@WebServlet("/NbaTicketList")
 
-public class NflTicketList extends HttpServlet {
+public class NbaTicketList extends HttpServlet {
 
     /* Console Page Displays all the Consoles and their Information in Game Speed */
 
@@ -24,18 +24,19 @@ public class NflTicketList extends HttpServlet {
         String del;
 
         HashMap<String, Listings> hm = new HashMap<String, Listings>();
-        HashMap<String, Listings> allNflTicketList = new HashMap<String, Listings>();
+        HashMap<String, Listings> allNbaTicketList = new HashMap<String, Listings>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
 
         try {
-            allNflTicketList = MySqlDataStoreUtilities.getNflTickets(id);
-            hm.putAll(allNflTicketList);
+            allNbaTicketList = MySqlDataStoreUtilities.getNbaTickets(id);
+            hm.putAll(allNbaTicketList);
+            System.out.println("allNbaTicketList" + allNbaTicketList);
         } catch (Exception e) {
             System.out.println(e);
         }
 
         if (CategoryName == null) {
-            hm.putAll(allNflTicketList);
+            hm.putAll(allNbaTicketList);
             name = "";
         }
 
@@ -43,7 +44,7 @@ public class NflTicketList extends HttpServlet {
         utility.printHtml("Header.html");
         utility.printHtml("LeftNavigationBar.html");
         pw.print("<div id='content' class='two-column'><div class='post'><h2 class='title meta'>");
-        pw.print("<a style='font-size: 24px;'>NFL Listings</a>");
+        pw.print("<a style='font-size: 24px;'>NBA Listings</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
         for (Map.Entry<String, Listings> entry : hm.entrySet()) {
