@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
+
+
 body {
 	background: #fff;
 	margin:0;
@@ -15,7 +17,34 @@ body {
 	padding:0;
 }
 
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+	float: left;
+	width: 50%;
+	height: 200px;
+	padding: 5px;
+  }
+  
+  /* Clear floats after image containers */
+  .row::after {
+	content: "";
+	height: 100px;
+	clear: both;
+	display: table;
+  }
 /** element defaults **/
+
+/* .img {
+    position: relative;
+    float: left;
+    width:  200px;
+    height: 200px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+} */
+
 table {
 	width: 100%;
 	text-align: left;
@@ -71,6 +100,7 @@ a {
 a:hover {
 	border-bottom-color: #333;
 	color: #333;
+	text-decoration:none
 }
 
 a:focus {
@@ -240,7 +270,7 @@ header h1 a, header h1 a:hover {
     letter-spacing: -2px;
     background-color: rgba(0, 0, 0, 0.8);
     border-bottom: none;
-
+text-decoration:none
 }
 
 
@@ -248,7 +278,7 @@ nav {
 	height: 80px;
 	margin-bottom: 30px;
 	width: 100%;
-	background-color: #3882D6;
+	background-color: #000000;
 	box-shadow: 0px 4px 5px #e0e0e0;
 	border-bottom: 1px solid #fff;
 }
