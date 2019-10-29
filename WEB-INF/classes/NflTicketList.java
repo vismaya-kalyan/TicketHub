@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/NflList")
+@WebServlet("/NflTicketList")
 
-public class NflList extends HttpServlet {
+public class NflTicketList extends HttpServlet {
 
     /* Console Page Displays all the Consoles and their Information in Game Speed */
 
@@ -19,21 +19,23 @@ public class NflList extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter pw = response.getWriter();
         String name = null;
-        String CategoryName = request.getParameter("maker");
+        String CategoryName = request.getParameter("type");
+        int id = Integer.parseInt(request.getParameter("nflid"));
+        String del;
 
-        HashMap<String, Nfl> hm = new HashMap<String, Nfl>();
-        HashMap<String, Nfl> allNfl = new HashMap<String, Nfl>();
+        HashMap<String, Listings> hm = new HashMap<String, Listings>();
+        HashMap<String, Listings> allNflTicketList = new HashMap<String, Listings>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
 
         try {
-            allNfl = MySqlDataStoreUtilities.getNfls();
-            System.out.println("allNfl" + allNfl);
+            allNflTicketList = MySqlDataStoreUtilities.getNflTickets(id);
+            hm.putAll(allNflTicketList);
         } catch (Exception e) {
             System.out.println(e);
         }
 
         if (CategoryName == null) {
-            hm.putAll(allNfl);
+            hm.putAll(allNflTicketList);
             name = "";
         }
 
@@ -44,23 +46,26 @@ public class NflList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NFL</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
-        for (Map.Entry<String, Nfl> entry : hm.entrySet()) {
-            Nfl nfl = entry.getValue();
-
+        for (Map.Entry<String, Listings> entry : hm.entrySet()) {
+            Listings nfl = entry.getValue();
+            del = nfl.getDeliveryMethodList();
+            del = del.replace("['", "");
+            del = del.replace("']", "");
             pw.print("<tr>");
-            pw.print("<td>SUN </td>");
             pw.print("<td><div id='shop_item'>");
-            pw.print("<h3>" + nfl.getMatchName() + "</h3>");
-            pw.print("<h5>" + nfl.getMatchStadium() + ", " + nfl.getMatchCity() + ", " + nfl.getMatchState() + ", US"
-                    + "</h5>");
+            pw.print("<h3>" + nfl.getSectionName() + "<h5>Row " + nfl.getRowInfo() + "</h5><h5>Seat "
+                    + nfl.getSeatNumber() + "</h5></h3>");
+            pw.print("<h5>" + nfl.getZoneName() + " </h5><h5>" + del + "</h5>");
 
             pw.print("</ul></div></td>");
-            pw.print("<td><h5>From<br>" + nfl.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><form method='get' action='NflTicketList'>" + "<input type='hidden' name='name' value='"
-                    + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"
-                    + "<input type='hidden' name='nflid' value='" + nfl.getMatchId() + "'>"
-                    + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
+            pw.print("<td><h5>Price<br>" + nfl.getCurrentPrice() + "</h5></td>");
+
+            // pw.print("<td><form method='post' action='NflTicketList'>" + "<input
+            // type='hidden' name='name' value='"
+            // + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"
+            // + "<input type='hidden' name='nflid' value='" + nfl.getMatchId() + "'>"
+            // + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
 
             pw.print("</tr>");
         }

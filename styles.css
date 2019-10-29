@@ -34,7 +34,9 @@ th {
 td {
 	border-bottom: 1px solid #ccc;
 }
-
+a{
+	text-decoration: none;
+}
 code, blockquote {
 	display: block;
 	border-left: 5px solid #222;
