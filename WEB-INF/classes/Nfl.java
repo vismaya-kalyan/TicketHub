@@ -22,9 +22,9 @@ public class Nfl extends HttpServlet {
     private Double minPrice;
     private Double maxPrice;
 
-    public Nfl(int matchId, String matchCategory, String matchName, String matchStadium, String matchCity,
-            String matchState, String teamOne, String teamTwo, String matchDate, Double minPrice, Double maxPrice) {
-        this.matchId = matchId;
+    public Nfl(String matchCategory, String matchName, String matchStadium, String matchCity, String matchState,
+            String teamOne, String teamTwo, String matchDate, Double minPrice, Double maxPrice) {
+
         this.matchCategory = matchCategory;
         this.matchName = matchName;
         this.matchStadium = matchStadium;
