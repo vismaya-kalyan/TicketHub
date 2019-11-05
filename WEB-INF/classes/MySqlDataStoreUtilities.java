@@ -198,6 +198,58 @@ public class MySqlDataStoreUtilities {
         return hm;
     }
 
+    // Getting NCAA events
+    public static HashMap<String, Ncaa> getNcaa() {
+        HashMap<String, Ncaa> hm = new HashMap<String, Ncaa>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  matchlist where matchCategory=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setString(1, "NCAA");
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                Ncaa nba = new Ncaa(rs.getString("matchCategory"), rs.getString("matchName"),
+                        rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
+                hm.put(rs.getString("matchId"), nba);
+                nba.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
+    //Getting Nhl events
+    public static HashMap<String, Nhl> getNhl() {
+        HashMap<String, Nhl> hm = new HashMap<String, Nhl>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  matchlist where matchCategory=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setString(1, "NHL");
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                Nhl nba = new Nhl(rs.getString("matchCategory"), rs.getString("matchName"),
+                        rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
+                hm.put(rs.getString("matchId"), nba);
+                nba.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
     public static HashMap<String, Listings> getNflTickets(int id) {
         HashMap<String, Listings> hm = new HashMap<String, Listings>();
         try {
@@ -224,6 +276,32 @@ public class MySqlDataStoreUtilities {
     }
 
     public static HashMap<String, Listings> getNbaTickets(int id) {
+        HashMap<String, Listings> hm = new HashMap<String, Listings>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  listings where matchIdRef=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            System.out.println("rs" + rs);
+            while (rs.next()) {
+                Listings nfl = new Listings(rs.getInt("matchIdRef"), rs.getDouble("currentPrice"),
+                        rs.getString("deliveryMethodList"), rs.getInt("quantity"), rs.getString("rowInfo"),
+                        rs.getString("seatNumbers"), rs.getString("sectionName"), rs.getString("zoneName"),
+                        rs.getString("sellerSectionName"));
+                hm.put(rs.getString("listingId"), nfl);
+                nfl.setListingId(rs.getInt("listingId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
+    // Getting Nhl tickets
+    public static HashMap<String, Listings> getNhlTickets(int id) {
         HashMap<String, Listings> hm = new HashMap<String, Listings>();
         try {
             getConnection();
