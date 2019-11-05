@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -7,7 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.Date;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.*;
+import java.text.DateFormat;
+import java.util.Date;
+import java.time.*;
 @WebServlet("/NflList")
 
 public class NflList extends HttpServlet {
@@ -24,6 +30,7 @@ public class NflList extends HttpServlet {
         HashMap<String, Nfl> hm = new HashMap<String, Nfl>();
         HashMap<String, Nfl> allNfl = new HashMap<String, Nfl>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
+
 
         try {
             allNfl = MySqlDataStoreUtilities.getNfls();
@@ -46,7 +53,26 @@ public class NflList extends HttpServlet {
 
         for (Map.Entry<String, Nfl> entry : hm.entrySet()) {
             Nfl nfl = entry.getValue();
+            //Adding code for date
+            
+            String date = nfl.getMatchDate();
+                
+            String time = date.substring(11,16);
 
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
+            System.out.println("Date = "+ date.substring(0,10)+" Time = "+ result);
+
+            
+            // try{
+            // SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.ENGLISH);
+            // Date myDate = sdf.parse(date.substring(0,10));
+            // sdf.applyPattern("EEE, d MMM yyyy");
+            // String sMyDate = sdf.format(myDate);
+            // System.out.print("My day = "+sMyDate);
+            // }
+            // catch(Exception e){
+            //     System.out.println(e);
+            // }
             pw.print("<tr>");
             pw.print("<td>SUN </td>");
             pw.print("<td><div id='shop_item'>");
