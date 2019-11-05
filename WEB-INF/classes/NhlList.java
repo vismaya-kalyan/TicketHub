@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.*;
 import java.text.DateFormat;
 import java.time.*;
+
 @WebServlet("/NhlList")
 
 public class NhlList extends HttpServlet {
@@ -51,15 +52,16 @@ public class NhlList extends HttpServlet {
         for (Map.Entry<String, Nhl> entry : hm.entrySet()) {
             Nhl ncaa = entry.getValue();
             String date = ncaa.getMatchDate();
-                
-            String time = date.substring(11,16);
 
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
-            
+            String time = date.substring(11, 16);
+
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
+                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
+
             pw.print("<tr>");
             pw.print("<td width='15%'>");
-            pw.print("<h5>"+ date.substring(0,10) + "</h5>");
-            pw.print("<h5>"+ result + "</h5>");
+            pw.print("<h5>" + date.substring(0, 10) + "</h5>");
+            pw.print("<h5>" + result + "</h5>");
             pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + ncaa.getMatchName() + "</h3>");
@@ -69,9 +71,15 @@ public class NhlList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><form method='get' action='NhlTicketList'>" + "<input type='hidden' name='name' value='"
-                    + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"
+            pw.print("<td><form method='get' action='NhlTicketList'>" + "<input type='hidden' name='type' value='nlf'>"
                     + "<input type='hidden' name='nhlid' value='" + ncaa.getMatchId() + "'>"
+                    + "<input type='hidden' name='date' value='" + date.substring(0, 10) + "'>"
+                    + "<input type='hidden' name='time' value='" + result + "'>"
+                    + "<input type='hidden' name='matchname' value='" + ncaa.getMatchName() + "'>"
+                    + "<input type='hidden' name='matchstadium' value='" + ncaa.getMatchStadium() + "'>"
+                    + "<input type='hidden' name='matchcity' value='" + ncaa.getMatchCity() + "'>"
+                    + "<input type='hidden' name='matchstate' value='" + ncaa.getMatchState() + "'>"
+                    + "<input type='hidden' name='matchcountry' value='US'>"
                     + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
 
             pw.print("</tr>");
