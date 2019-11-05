@@ -7,7 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.Date;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.*;
+import java.text.DateFormat;
+import java.time.*;
 @WebServlet("/NhlList")
 
 public class NhlList extends HttpServlet {
@@ -46,9 +50,17 @@ public class NhlList extends HttpServlet {
 
         for (Map.Entry<String, Nhl> entry : hm.entrySet()) {
             Nhl ncaa = entry.getValue();
+            String date = ncaa.getMatchDate();
+                
+            String time = date.substring(11,16);
 
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
+            
             pw.print("<tr>");
-            pw.print("<td>SUN </td>");
+            pw.print("<td width='15%'>");
+            pw.print("<h5>"+ date.substring(0,10) + "</h5>");
+            pw.print("<h5>"+ result + "</h5>");
+            pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + ncaa.getMatchName() + "</h3>");
             pw.print("<h5>" + ncaa.getMatchStadium() + ", " + ncaa.getMatchCity() + ", " + ncaa.getMatchState() + ", US"

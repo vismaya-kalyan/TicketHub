@@ -12,7 +12,6 @@ import java.util.Date;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.*;
 import java.text.DateFormat;
-import java.util.Date;
 import java.time.*;
 @WebServlet("/NflList")
 
@@ -60,21 +59,12 @@ public class NflList extends HttpServlet {
             String time = date.substring(11,16);
 
             String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
-            System.out.println("Date = "+ date.substring(0,10)+" Time = "+ result);
-
             
-            // try{
-            // SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", java.util.Locale.ENGLISH);
-            // Date myDate = sdf.parse(date.substring(0,10));
-            // sdf.applyPattern("EEE, d MMM yyyy");
-            // String sMyDate = sdf.format(myDate);
-            // System.out.print("My day = "+sMyDate);
-            // }
-            // catch(Exception e){
-            //     System.out.println(e);
-            // }
             pw.print("<tr>");
-            pw.print("<td>SUN </td>");
+            pw.print("<td width='15%'>");
+            pw.print("<h5>"+ date.substring(0,10) + "</h5>");
+            pw.print("<h5>"+ result + "</h5>");
+            pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + nfl.getMatchName() + "</h3>");
             pw.print("<h5>" + nfl.getMatchStadium() + ", " + nfl.getMatchCity() + ", " + nfl.getMatchState() + ", US"
