@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -7,7 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.util.Date;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.*;
+import java.text.DateFormat;
+import java.time.*;
 @WebServlet("/NflList")
 
 public class NflList extends HttpServlet {
@@ -24,6 +29,7 @@ public class NflList extends HttpServlet {
         HashMap<String, Nfl> hm = new HashMap<String, Nfl>();
         HashMap<String, Nfl> allNfl = new HashMap<String, Nfl>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
+
 
         try {
             allNfl = MySqlDataStoreUtilities.getNfls();
@@ -46,9 +52,19 @@ public class NflList extends HttpServlet {
 
         for (Map.Entry<String, Nfl> entry : hm.entrySet()) {
             Nfl nfl = entry.getValue();
+            //Adding code for date
+            
+            String date = nfl.getMatchDate();
+                
+            String time = date.substring(11,16);
 
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
+            
             pw.print("<tr>");
-            pw.print("<td>SUN </td>");
+            pw.print("<td width='15%'>");
+            pw.print("<h5>"+ date.substring(0,10) + "</h5>");
+            pw.print("<h5>"+ result + "</h5>");
+            pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + nfl.getMatchName() + "</h3>");
             pw.print("<h5>" + nfl.getMatchStadium() + ", " + nfl.getMatchCity() + ", " + nfl.getMatchState() + ", US"
