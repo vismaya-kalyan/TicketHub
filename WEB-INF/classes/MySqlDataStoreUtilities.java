@@ -157,7 +157,7 @@ public class MySqlDataStoreUtilities {
             PreparedStatement pst = conn.prepareStatement(selectNfl);
             pst.setString(1, "NFL");
             ResultSet rs = pst.executeQuery();
-            System.out.println("rs" + rs);
+            // System.out.println("rs" + rs);
             while (rs.next()) {
                 Nfl nfl = new Nfl(rs.getString("matchCategory"), rs.getString("matchName"),
                         rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
@@ -165,6 +165,81 @@ public class MySqlDataStoreUtilities {
                         rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
                 hm.put(rs.getString("matchId"), nfl);
                 nfl.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
+    public static HashMap<String, Nba> getNbas() {
+        HashMap<String, Nba> hm = new HashMap<String, Nba>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  matchlist where matchCategory=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setString(1, "NBA");
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                Nba nba = new Nba(rs.getString("matchCategory"), rs.getString("matchName"),
+                        rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
+                hm.put(rs.getString("matchId"), nba);
+                nba.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
+    public static HashMap<String, Listings> getNflTickets(int id) {
+        HashMap<String, Listings> hm = new HashMap<String, Listings>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  listings where matchIdRef=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            System.out.println("rs" + rs);
+            while (rs.next()) {
+                Listings nfl = new Listings(rs.getInt("matchIdRef"), rs.getDouble("currentPrice"),
+                        rs.getString("deliveryMethodList"), rs.getInt("quantity"), rs.getString("rowInfo"),
+                        rs.getString("seatNumbers"), rs.getString("sectionName"), rs.getString("zoneName"),
+                        rs.getString("sellerSectionName"));
+                hm.put(rs.getString("listingId"), nfl);
+                nfl.setListingId(rs.getInt("listingId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
+    public static HashMap<String, Listings> getNbaTickets(int id) {
+        HashMap<String, Listings> hm = new HashMap<String, Listings>();
+        try {
+            getConnection();
+
+            String selectNfl = "select * from  listings where matchIdRef=?";
+            PreparedStatement pst = conn.prepareStatement(selectNfl);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            System.out.println("rs" + rs);
+            while (rs.next()) {
+                Listings nfl = new Listings(rs.getInt("matchIdRef"), rs.getDouble("currentPrice"),
+                        rs.getString("deliveryMethodList"), rs.getInt("quantity"), rs.getString("rowInfo"),
+                        rs.getString("seatNumbers"), rs.getString("sectionName"), rs.getString("zoneName"),
+                        rs.getString("sellerSectionName"));
+                hm.put(rs.getString("listingId"), nfl);
+                nfl.setListingId(rs.getInt("listingId"));
 
             }
         } catch (Exception e) {
