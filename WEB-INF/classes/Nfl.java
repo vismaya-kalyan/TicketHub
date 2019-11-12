@@ -22,6 +22,10 @@ public class Nfl extends HttpServlet {
     private Double minPrice;
     private Double maxPrice;
 
+    public Nfl() {
+
+    }
+
     public Nfl(String matchCategory, String matchName, String matchStadium, String matchCity, String matchState,
             String teamOne, String teamTwo, String matchDate, Double minPrice, Double maxPrice) {
 

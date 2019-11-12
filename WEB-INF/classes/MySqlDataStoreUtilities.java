@@ -224,7 +224,7 @@ public class MySqlDataStoreUtilities {
         return hm;
     }
 
-    //Getting Nhl events
+    // Getting Nhl events
     public static HashMap<String, Nhl> getNhl() {
         HashMap<String, Nhl> hm = new HashMap<String, Nhl>();
         try {
@@ -324,6 +324,71 @@ public class MySqlDataStoreUtilities {
             System.out.println(e);
         }
         return hm;
+    }
+
+    public static String addMatch(int matchId, String matchName, String matchCategory, String matchStadium,
+            String teamOne, String teamTwo, String matchCity, String matchState, String matchDate, Double maxPrice,
+            Double minPrice) {
+
+        String msg = "Product is added successfully";
+        try {
+
+            getConnection();
+            String addProductQurey = "INSERT INTO  matchlist(matchId, matchCategory, matchName, matchStadium, matchCity,matchState,teamOne,teamTwo,matchDate, minPrice, maxPrice)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+
+            PreparedStatement pst = conn.prepareStatement(addProductQurey);
+            pst.setInt(1, matchId);
+            pst.setString(2, matchCategory);
+            pst.setString(3, matchName);
+            pst.setString(4, matchStadium);
+            pst.setString(5, matchCity);
+            pst.setString(6, matchState);
+            pst.setString(7, teamOne);
+            pst.setString(8, teamTwo);
+            pst.setString(9, matchDate);
+            pst.setDouble(10, minPrice);
+            pst.setDouble(11, maxPrice);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            msg = "Erro while adding the product";
+            e.printStackTrace();
+
+        }
+        return msg;
+    }
+
+    public static String addListing(int matchIdRef, Double currentPrice, String deliveryMethod, int listingId,
+            int quanity, String rowInfo, String seatNumber, String sectionName, String zoneName,
+            String sellerSectionName) {
+        String msg = "Product is added successfully";
+        try {
+
+            getConnection();
+            String addProductQurey = "INSERT INTO  listings(matchIdRef, currentPrice, deliveryMethodList, listingId, quantity,rowInfo,seatNumbers,sectionName,zoneName,sellerSectionName)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?);";
+
+            PreparedStatement pst = conn.prepareStatement(addProductQurey);
+            pst.setInt(1, matchIdRef);
+            pst.setDouble(2, currentPrice);
+            pst.setString(3, deliveryMethod);
+            pst.setInt(4, listingId);
+            pst.setInt(5, quanity);
+            pst.setString(6, rowInfo);
+            pst.setString(7, seatNumber);
+            pst.setString(8, sectionName);
+            pst.setString(9, zoneName);
+            pst.setString(10, sellerSectionName);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            msg = "Erro while adding the product";
+            e.printStackTrace();
+
+        }
+
+        return msg;
     }
 
 }
