@@ -51,11 +51,8 @@ public class NhlList extends HttpServlet {
         for (Map.Entry<String, Nhl> entry : hm.entrySet()) {
             Nhl ncaa = entry.getValue();
             String date = ncaa.getMatchDate();
-                
             String time = date.substring(11,16);
-
             String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
-            
             pw.print("<tr>");
             pw.print("<td width='15%'>");
             pw.print("<h5>"+ date.substring(0,10) + "</h5>");
@@ -69,8 +66,9 @@ public class NhlList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><form method='get' action='NhlTicketList'>" + "<input type='hidden' name='name' value='"
-                    + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"
+            pw.print("<td><form method='get' action='NhlTicketList'>" 
+                    + "<input type='hidden' name='name' value='" + entry.getKey() + "'>" 
+                    + "<input type='hidden' name='type' value='nlf'>"
                     + "<input type='hidden' name='nhlid' value='" + ncaa.getMatchId() + "'>"
                     + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
 
