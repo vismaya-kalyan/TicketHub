@@ -18,24 +18,34 @@ import javax.servlet.http.HttpServletResponse;
 */
 
 public class OrderItem extends HttpServlet{
-	private String name;
+	private String matchName;
+	private String zoneName;
 	private double price;
-	private String image;
-	private String retailer;
+	private String row;
+	private String seat;
 	
-	public OrderItem(String name, double price, String image, String retailer){
-		this.name=name;
+	public OrderItem(String matchName, String zoneName, double price, String row, String seat){
+		this.matchName = matchName;
+		this.zoneName = zoneName;
 		this.price=price;
-		this.image=image;
-		this.retailer = retailer;
+		this.row=row;
+		this.seat = seat;
 	}
 
-	public String getName() {
-		return name;
+	public String getMatchName() {
+		return matchName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMatchName(String matchName) {
+		this.matchName = matchName;
+	}
+
+	public String getZoneName() {
+		return zoneName;
+	}
+
+	public void setZoneName(String zoneName) {
+		this.zoneName = zoneName;
 	}
 
 	public double getPrice() {
@@ -46,19 +56,21 @@ public class OrderItem extends HttpServlet{
 		this.price = price;
 	}
 
-	public String getImage() {
-		return image;
+	public String getRow() {
+		return row;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setRow(String row) {
+		this.row = row;
 	}
 
-	public String getRetailer() {
-		return retailer;
+	public String getSeat() {
+		return seat;
 	}
 
-	public void setRetailer(String retailer) {
-		this.retailer = retailer;
+	public void setSeat(String seat) {
+		this.seat = seat;
 	}
+
+
 }
