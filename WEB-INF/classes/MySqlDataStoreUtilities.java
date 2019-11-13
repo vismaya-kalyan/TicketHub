@@ -57,12 +57,12 @@ public class MySqlDataStoreUtilities {
             String userAddress, String creditCardNo) {
         try {
 
-            Date current_date = new Date();
+            // Date current_date = new Date();
 
-            SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            // SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             getConnection();
-            String insertIntoCustomerOrderQuery = "INSERT INTO customerOrders(OrderId,UserName,OrderName,OrderPrice,userAddress,creditCardNo,orderTime) "
+            String insertIntoCustomerOrderQuery = "INSERT INTO customerOrders(OrderId,UserName,OrderName,OrderPrice,userAddress,creditCardNo) "
                     + "VALUES (?,?,?,?,?,?,?);";
 
             PreparedStatement pst = conn.prepareStatement(insertIntoCustomerOrderQuery);
@@ -73,7 +73,7 @@ public class MySqlDataStoreUtilities {
             pst.setDouble(4, orderPrice);
             pst.setString(5, userAddress);
             pst.setString(6, creditCardNo);
-            pst.setString(7, SimpleDateFormat.format(current_date.getTime()));
+            // pst.setString(7, SimpleDateFormat.format(current_date.getTime()));
             pst.execute();
         } catch (Exception e) {
 

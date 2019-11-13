@@ -55,9 +55,9 @@ public class CheckOut extends HttpServlet {
 		for (OrderItem oi : utility.getCustomerOrders()) 
 		{
 			pw.print("<tr><td> Product Purchased:</td><td>");
-			pw.print(oi.getName()+"</td></tr><tr><td>");
+			pw.print(oi.getMatchName()+"</td></tr><tr><td>");
 			pw.print("<input type='hidden' name='orderPrice' value='"+oi.getPrice()+"'>");
-			pw.print("<input type='hidden' name='orderName' value='"+oi.getName()+"'>");
+			pw.print("<input type='hidden' name='orderName' value='"+oi.getZoneName()+"'>");
 			pw.print("Product Price:</td><td>"+ oi.getPrice());
 			pw.print("</td></tr>");
 		}

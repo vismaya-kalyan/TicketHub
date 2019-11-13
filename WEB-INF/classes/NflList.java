@@ -33,7 +33,7 @@ public class NflList extends HttpServlet {
 
         try {
             allNfl = MySqlDataStoreUtilities.getNfls();
-            System.out.println("allNfl" + allNfl);
+            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -55,11 +55,8 @@ public class NflList extends HttpServlet {
             // Adding code for date
 
             String date = nfl.getMatchDate();
-
             String time = date.substring(11, 16);
-
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
-                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
 
             pw.print("<tr>");
             pw.print("<td width='15%'>");

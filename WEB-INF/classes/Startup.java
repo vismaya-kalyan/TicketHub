@@ -13,7 +13,7 @@ public class Startup extends HttpServlet
 
 	public void init() throws ServletException
     {
-		SaxParserDataStore.addHashmap();
+		// SaxParserDataStore.addHashmap();
 
     }
 }
