@@ -51,19 +51,31 @@ public class Utilities extends HttpServlet {
 		String result = HtmlToString(file);
 		// to print the right navigation in header of username cart and logout etc
 		if (file == "Header.html") {
-			// result=result+"<div id='menu' style='float: right;'><ul>";
+			result = result + "<div id='menu' style='float: right;'><ul>";
 			if (session.getAttribute("username") != null) {
 				String username = session.getAttribute("username").toString();
 				username = Character.toUpperCase(username.charAt(0)) + username.substring(1);
-				result = result + "<li><a href='ViewOrder'><span class='glyphicon'>ViewOrder</span></a></li>"
-						+ "<li><a><span class='glyphicon'>Hello," + username + "</span></a></li>"
-						+ "<li><a href='Account'><span class='glyphicon'>Account</span></a></li>"
-						+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
-			} else
+				String userType = session.getAttribute("usertype").toString();
+				switch (userType) {
+				case "customer":
+					result = result + "<li><a href='ViewOrder'><span class='glyphicon'>ViewOrder</span></a></li>"
+							+ "<li><a><span class='glyphicon'>Hello, " + username + "</span></a></li>"
+							+ "<li><a href='Account'><span class='glyphicon'>Account</span></a></li>"
+							+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
+					break;
+				case "manager":
+					result = result
+							+ "<li><a href='StoreManagerHome'><span class='glyphicon'>ViewProduct</span></a></li>"
+							+ "<li><a><span class='glyphicon'>Hello, " + username + "</span></a></li>"
+							+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
+					break;
+				}
+			} else {
 				result = result + "<li><a href='ViewOrder'><span class='glyphicon'>View Order</span></a></li>"
 						+ "<li><a href='Login'><span class='glyphicon'>Login</span></a></li>";
+			}
 			result = result + "<li><a href='Cart'><span class='glyphicon'>Cart(" + CartCount()
-					+ ")</span></a></li></ul></div></div><div id='page'>";
+					+ ")</span></a></li></ul></div></div><div id='page'>" + "</nav>";
 			pw.print(result);
 		} else
 			pw.print(result);
@@ -155,7 +167,7 @@ public class Utilities extends HttpServlet {
 		String TOMCAT_HOME = System.getProperty("catalina.home");
 		try {
 			FileInputStream fileInputStream = new FileInputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\UserDetails.txt"));
+					new File(TOMCAT_HOME + "\\webapps\\SportsHub\\UserDetails.txt"));
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 			hm = (HashMap) objectInputStream.readObject();
 		} catch (Exception e) {
@@ -178,7 +190,7 @@ public class Utilities extends HttpServlet {
 		String TOMCAT_HOME = System.getProperty("catalina.home");
 		try {
 			FileInputStream fileInputStream = new FileInputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\PaymentDetails.txt"));
+					new File(TOMCAT_HOME + "\\webapps\\SportsHub\\PaymentDetails.txt"));
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 			orderPayments = (HashMap) objectInputStream.readObject();
 		} catch (Exception e) {
@@ -207,7 +219,7 @@ public class Utilities extends HttpServlet {
 		// get the payment details file
 		try {
 			FileInputStream fileInputStream = new FileInputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\PaymentDetails.txt"));
+					new File(TOMCAT_HOME + "\\webapps\\SportsHub\\PaymentDetails.txt"));
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 			orderPayments = (HashMap) objectInputStream.readObject();
 		} catch (Exception e) {
@@ -232,7 +244,7 @@ public class Utilities extends HttpServlet {
 
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\PaymentDetails.txt"));
+					new File(TOMCAT_HOME + "\\webapps\\SportsHub\\PaymentDetails.txt"));
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 			objectOutputStream.writeObject(orderPayments);
 			objectOutputStream.flush();

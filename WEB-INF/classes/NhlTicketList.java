@@ -21,6 +21,13 @@ public class NhlTicketList extends HttpServlet {
         String name = null;
         String CategoryName = request.getParameter("type");
         int id = Integer.parseInt(request.getParameter("nhlid"));
+        String date = request.getParameter("date");
+        String time = request.getParameter("time");
+        String matchname = request.getParameter("matchname");
+        String matchstadium = request.getParameter("matchstadium");
+        String matchcity = request.getParameter("matchcity");
+        String matchstate = request.getParameter("matchstate");
+        String matchcountry = request.getParameter("matchcountry");
         String del;
 
         HashMap<String, Listings> hm = new HashMap<String, Listings>();
