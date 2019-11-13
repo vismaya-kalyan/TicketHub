@@ -21,15 +21,16 @@ public class Cart extends HttpServlet {
 		/* From the HttpServletRequest variable name,type,maker and acessories information are obtained.*/
 
 		Utilities utility = new Utilities(request, pw);
+		String matchName = request.getParameter("matchName");
 		String name = request.getParameter("name");
 		String row = request.getParameter("row");
 		String seat = request.getParameter("seat");
 		String zone = request.getParameter("zone");
 		double price = Double.parseDouble(request.getParameter("price"));
-		System.out.print("name= " + name + "row = " + row + "seat= " + seat + "zone" + zone);
+		System.out.print("matchname= " + matchName + "row = " + row + "seat= " + seat + "zone" + zone);
 
 		/* StoreProduct Function stores the Purchased product in Orders HashMap.*/	
-		utility.storeProduct(name, zone, price, row,seat);
+		utility.storeProduct(matchName, zone, price, row,seat);
 
 		displayCart(request, response);
 	}
@@ -81,7 +82,7 @@ public class Cart extends HttpServlet {
 		{
 			pw.print("<h4 style='color:red'>Your Cart is empty</h4>");
 		}
-		pw.print("</div></div></div>");		
+		pw.print("</div></div></div><div class='clear'></div>");		
 		utility.printHtml("Footer.html");
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

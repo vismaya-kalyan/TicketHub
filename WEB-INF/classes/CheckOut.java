@@ -56,6 +56,10 @@ public class CheckOut extends HttpServlet {
 		{
 			pw.print("<tr><td> Product Purchased:</td><td>");
 			pw.print(oi.getMatchName()+"</td></tr><tr><td>");
+			pw.print("<tr><td> Seat Number:</td><td>");
+			pw.print(oi.getSeat()+"</td></tr>");
+			pw.print("<tr><td> Row:</td><td>");
+			pw.print(oi.getRow()+"</td></tr>");
 			pw.print("<input type='hidden' name='orderPrice' value='"+oi.getPrice()+"'>");
 			pw.print("<input type='hidden' name='orderName' value='"+oi.getZoneName()+"'>");
 			pw.print("Product Price:</td><td>"+ oi.getPrice());
@@ -70,13 +74,17 @@ public class CheckOut extends HttpServlet {
 		pw.print("<td><input type='text' name='creditCardNo'>");
 		pw.print("</td></tr>");
 		pw.print("<tr><td>");
+     	pw.print("Email</td>");
+		pw.print("<td><input type='text' name='email'>");
+		pw.print("</td></tr>");
+		pw.print("<tr><td>");
 	    pw.print("Customer Address</td>");
 		pw.print("<td><input type='text' name='userAddress'>");
         pw.print("</td></tr>");
 		pw.print("<tr><td colspan='2'>");
 		pw.print("<input type='submit' name='submit' class='btnbuy'>");
         pw.print("</td></tr></table></form>");
-		pw.print("</div></div></div>");		
+		pw.print("</div></div><div class='clear'></div>");		
 		utility.printHtml("Footer.html");
 	    }
         catch(Exception e)
