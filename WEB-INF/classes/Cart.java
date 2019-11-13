@@ -41,7 +41,7 @@ public class Cart extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 		Utilities utility = new Utilities(request,pw);
-		Carousel carousel = new Carousel();
+		
 		if(!utility.isLoggedin()){
 			HttpSession session = request.getSession(true);				
 			session.setAttribute("login_msg", "Please Login to add items to cart");
@@ -63,8 +63,8 @@ public class Cart extends HttpServlet {
 			for (OrderItem oi : utility.getCustomerOrders()) 
 			{
 				pw.print("<tr>");
-				pw.print("<td>"+i+".</td><td>"+oi.getName()+"</td><td>: "+oi.getPrice()+"</td>");
-				pw.print("<input type='hidden' name='orderName' value='"+oi.getName()+"'>");
+				pw.print("<td>"+i+".</td><td>"+oi.getMatchName()+"</td><td>: "+oi.getPrice()+"</td>");
+				pw.print("<input type='hidden' name='orderName' value='"+oi.getZoneName()+"'>");
 				pw.print("<input type='hidden' name='orderPrice' value='"+oi.getPrice()+"'>");
 				pw.print("</tr>");
 				total = total +oi.getPrice();
@@ -75,7 +75,7 @@ public class Cart extends HttpServlet {
 			pw.print("<tr><td></td><td></td><td><input type='submit' name='CheckOut' value='CheckOut' class='btnbuy' /></td>");
 			pw.print("</table></form>");
 			/* This code is calling Carousel.java code to implement carousel feature*/
-			pw.print(carousel.carouselfeature(utility));
+			
 		}
 		else
 		{
