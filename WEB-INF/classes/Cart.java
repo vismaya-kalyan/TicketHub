@@ -22,14 +22,15 @@ public class Cart extends HttpServlet {
 
 		Utilities utility = new Utilities(request, pw);
 		String name = request.getParameter("name");
-		String type = request.getParameter("type");
-		String maker = request.getParameter("maker");
-		String access = request.getParameter("access");
-		System.out.print("name" + name + "type" + type + "maker" + maker + "accesee" + access);
+		String row = request.getParameter("row");
+		String seat = request.getParameter("seat");
+		String zone = request.getParameter("zone");
+		double price = Double.parseDouble(request.getParameter("price"));
+		System.out.print("name= " + name + "row = " + row + "seat= " + seat + "zone" + zone);
 
 		/* StoreProduct Function stores the Purchased product in Orders HashMap.*/	
-		
-		utility.storeProduct(name, type, maker, access);
+		utility.storeProduct(name, zone, price, row,seat);
+
 		displayCart(request, response);
 	}
 	
