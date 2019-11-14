@@ -51,10 +51,11 @@ public class Payment extends HttpServlet {
 			// iterate through each order
 
 			for (OrderItem oi : utility.getCustomerOrders()) {
+        
+				//set the parameter for each column and execute the prepared statement
+				System.out.println("Saving these orders to the database "+orderId+oi.getMatchName()+oi.getPrice()+userAddress+creditCardNo);
+				utility.storePayment(orderId,oi.getMatchName(),oi.getPrice(),userAddress,creditCardNo);
 
-				// set the parameter for each column and execute the prepared statement
-
-				utility.storePayment(orderId, oi.getMatchName(), oi.getPrice(), userAddress, creditCardNo);
 			}
 
 			// remove the order details from cart after processing

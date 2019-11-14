@@ -63,7 +63,7 @@ public class MySqlDataStoreUtilities {
 
             getConnection();
             String insertIntoCustomerOrderQuery = "INSERT INTO customerOrders(OrderId,UserName,OrderName,OrderPrice,userAddress,creditCardNo) "
-                    + "VALUES (?,?,?,?,?,?,?);";
+                    + "VALUES (?,?,?,?,?,?);";
 
             PreparedStatement pst = conn.prepareStatement(insertIntoCustomerOrderQuery);
             // set the parameter for each column and execute the prepared statement
@@ -76,6 +76,8 @@ public class MySqlDataStoreUtilities {
             // pst.setString(7, SimpleDateFormat.format(current_date.getTime()));
             pst.execute();
         } catch (Exception e) {
+
+            System.out.println("Ecxeption from storing the order = "+e);
 
         }
     }
