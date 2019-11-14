@@ -149,17 +149,17 @@ public class Utilities extends HttpServlet {
 	 * getUser Function checks the user is a customer or retailer or manager and
 	 * returns the user class variable.
 	 */
-	public User getUser() {
+	public User getUser(){
+		
 		String usertype = usertype();
-		HashMap<String, User> hm = new HashMap<String, User>();
-		String TOMCAT_HOME = System.getProperty("catalina.home");
-		try {
-			FileInputStream fileInputStream = new FileInputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\UserDetails.txt"));
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-			hm = (HashMap) objectInputStream.readObject();
-		} catch (Exception e) {
+		HashMap<String, User> hm=new HashMap<String, User>();
+		try
+		{		
+			hm=MySqlDataStoreUtilities.selectUser();
 		}
+		catch(Exception e)
+		{
+		}	
 		User user = hm.get(username());
 		return user;
 	}
@@ -173,23 +173,25 @@ public class Utilities extends HttpServlet {
 	}
 
 	/* getOrdersPaymentSize Function gets the size of OrderPayment */
-	public int getOrderPaymentSize() {
+	public int getOrderPaymentSize(){
 		HashMap<Integer, ArrayList<OrderPayment>> orderPayments = new HashMap<Integer, ArrayList<OrderPayment>>();
 		String TOMCAT_HOME = System.getProperty("catalina.home");
-		try {
-			FileInputStream fileInputStream = new FileInputStream(
-					new File(TOMCAT_HOME + "\\webapps\\Tutorial_1\\PaymentDetails.txt"));
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-			orderPayments = (HashMap) objectInputStream.readObject();
-		} catch (Exception e) {
-
-		}
-		int size = 0;
-		for (Map.Entry<Integer, ArrayList<OrderPayment>> entry : orderPayments.entrySet()) {
-			size = size + 1;
-
-		}
-		return size;
+			try
+			{
+				// FileInputStream fileInputStream = new FileInputStream(new File(TOMCAT_HOME+"\\webapps\\assignment_1\\PaymentDetails.txt"));
+				// ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);	      
+				orderPayments = MySqlDataStoreUtilities.selectOrder();
+			}
+			catch(Exception e)
+			{
+			
+			}
+			int size=0;
+			for(Map.Entry<Integer, ArrayList<OrderPayment>> entry : orderPayments.entrySet()){
+					 size=size + 1;
+					 
+			}
+			return size;		
 	}
 
 	/* CartCount Function gets the size of User Orders */
