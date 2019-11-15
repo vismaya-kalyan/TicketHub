@@ -14,16 +14,21 @@ import java.io.*;
 public class Registration extends HttpServlet {
 	private String error_msg;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 		displayRegistration(request, response, pw, false);
 	}
 
-	/*   Username,Password,Usertype information are Obtained from HttpServletRequest variable and validates whether
-		 the User Credential Already Exists or else User Details are Added to the Users HashMap */
+	/*
+	 * Username,Password,Usertype information are Obtained from HttpServletRequest
+	 * variable and validates whether the User Credential Already Exists or else
+	 * User Details are Added to the Users HashMap
+	 */
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 		Utilities utility = new Utilities(request, pw);
@@ -33,77 +38,73 @@ public class Registration extends HttpServlet {
 		String repassword = request.getParameter("repassword");
 		String usertype = "customer";
 		System.out.println("Printing values from registration" + username + password + repassword);
-		if(!utility.isLoggedin())
+		if (!utility.isLoggedin())
 			usertype = request.getParameter("usertype");
 
-		//if password and repassword does not match show error message
+		// if password and repassword does not match show error message
 
-		if(!password.equals(repassword))
-		{
+		if (!password.equals(repassword)) {
 			error_msg = "Passwords doesn't match!";
-		}
-		else
-		{
+		} else {
 
-			//get the userdata from sql database to hashmap
-			HashMap<String, User> hm=new HashMap<String, User>();
-			
-			try
-			{
-				hm=MySqlDataStoreUtilities.selectUser();
-			}
-			catch(Exception e)
-			{
-				
+			// get the userdata from sql database to hashmap
+			HashMap<String, User> hm = new HashMap<String, User>();
+
+			try {
+				hm = MySqlDataStoreUtilities.selectUser();
+			} catch (Exception e) {
+
 			}
 
 			// if the user already exist show error that already exist
 
-			if(hm.containsKey(username))
+			if (hm.containsKey(username))
 				error_msg = "Username already exist as " + usertype;
-			else
-			{
-				/*create a user object and store details into hashmap
-				store the user hashmap into file  */
+			else {
+				/*
+				 * create a user object and store details into hashmap store the user hashmap
+				 * into file
+				 */
 
-				User user = new User(username,password,usertype);
+				User user = new User(username, password, usertype);
 				hm.put(username, user);
-				MySqlDataStoreUtilities.insertUser(username,password,repassword,usertype);					
-				HttpSession session = request.getSession(true);				
-				session.setAttribute("login_msg", "Your "+usertype+" account has been created. Please login");
-				if(!utility.isLoggedin()){
-					response.sendRedirect("Login"); return;
+				MySqlDataStoreUtilities.insertUser(username, password, repassword, usertype);
+				HttpSession session = request.getSession(true);
+				session.setAttribute("login_msg", "Your " + usertype + " account has been created. Please login");
+				if (!utility.isLoggedin()) {
+					response.sendRedirect("Login");
+					return;
 				} else {
-					response.sendRedirect("Account"); return;
+					response.sendRedirect("Account");
+					return;
 				}
 			}
 		}
 
-		//display the error message
-		if(utility.isLoggedin()){
-			HttpSession session = request.getSession(true);				
+		// display the error message
+		if (utility.isLoggedin()) {
+			HttpSession session = request.getSession(true);
 			session.setAttribute("login_msg", error_msg);
-			response.sendRedirect("Account"); return;
+			response.sendRedirect("Account");
+			return;
 		}
 		displayRegistration(request, response, pw, true);
-		
+
 	}
 
-	/*  displayRegistration function displays the Registration page of New User */
-	
-	protected void displayRegistration(HttpServletRequest request,
-			HttpServletResponse response, PrintWriter pw, boolean error)
-			throws ServletException, IOException {
+	/* displayRegistration function displays the Registration page of New User */
+
+	protected void displayRegistration(HttpServletRequest request, HttpServletResponse response, PrintWriter pw,
+			boolean error) throws ServletException, IOException {
 		Utilities utility = new Utilities(request, pw);
 		utility.printHtml("Header.html");
 		pw.print("<div id='container' class='width' style='float: none;>");
-		pw.print("<h2 class='title meta'><a style='font-size: 24px;'>Registration</a></h2>"
+		pw.print("<h2 class='title meta'><a style='text-align: center; font-size: 24px;'>Registration</a></h2>"
 				+ "<div class='entry'>"
 				+ "<div style='width:400px; margin:25px; margin-left: auto;margin-right: auto;'>");
 		if (error)
-			pw.print("<h4 style='color:red'>"+error_msg+"</h4>");
-		pw.print("<form method='post' action='Registration'>"
-				+ "<table style='width:100%'><tr><td>"
+			pw.print("<h4 style='color:red'>" + error_msg + "</h4>");
+		pw.print("<form method='post' action='Registration'>" + "<table style='width:100%'><tr><td>"
 				+ "<h3>Username</h3></td><td><input type='text' name='username' value='' class='input' required></input>"
 				+ "</td></tr><tr><td>"
 				+ "<h3>Password</h3></td><td><input type='password' name='password' value='' class='input' required></input>"
