@@ -85,7 +85,7 @@ public class Login extends HttpServlet {
 				+ "</td></tr><tr><td style='border:white;'>"
 				+ "<h3>Password</h3></td><td style='border:white;'><input class='search' type='password' name='password' value='' class='input' required></input>"
 				+ "</td></tr><tr><td style='border:white;'>"
-				+ "<h3>User Type</h3></td><td style='border:white;'><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='retailer'>Store Manager</option><option value='manager'>Salesman</option></select>"
+				+ "<h3>User Type</h3></td><td style='border:white;'><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='manager'>Store Manager</option></select>"
 				+ "</td></tr><tr><td style='border:white;'></td><td style='border:white;'>"
 				+ "<input type='submit' class='btnbuy' value='Login' style='float: right;height: 20px margin: 20px; margin-right: 10px;'></input>"
 				+ "</td></tr><tr><td style='border:white;'></td><td style='border:white;padding:10px;'>"

@@ -31,7 +31,6 @@ public class City extends HttpServlet {
 
         try {
             cities = MySqlDataStoreUtilities.getCities();
-            System.out.println(cities);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -41,14 +40,12 @@ public class City extends HttpServlet {
         utility.printHtml("Header.html");
         utility.printHtml("LeftNavigationBar.html");
         pw.print("<div id='content' class='two-column'><div class='post'><h2 class='title meta'>");
-        pw.print("<a style='font-size: 24px;'>Cities</a>");
+        pw.print("<h2 style='font-size: 24px;'>Cities</h2>");
         pw.print("</h2><div class='entry'>");
 
         for (int i = 0; i < cities.size(); i++) {
-            // pw.print("<h4>" + cities.get(i) + "</h2>");
 
-            pw.print("<form method='get' action='SpecificCity'>" + "<input type='hidden' name='matchcity' value='"
-                    + cities.get(i) + "'>" + "<input type='submit' value='" + cities.get(i) + "'></form>");
+            pw.print("<h5><a href= 'SpecificCity?matchcity=" + cities.get(i) + "'>" + cities.get(i) + "</a></h5><br>");
         }
         pw.print("</div></div></div><div class='clear'></div>");
         utility.printHtml("Footer.html");
