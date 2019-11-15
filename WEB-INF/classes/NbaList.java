@@ -72,10 +72,10 @@ public class NbaList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + nba.getMinPrice() + "</h5></td>");
 
-            pw.print("<td style='padding:5px;><form method='get' action='NbaTicketList'>" + "<input type='hidden' name='type' value='nlf'>"
-                    + "<input type='hidden' name='nflid' value='" + nba.getMatchId() + "'>"
-                    + "<input type='hidden' name='date' value='" + date.substring(0, 10) + "'>"
-                    + "<input type='hidden' name='time' value='" + result + "'>"
+            pw.print("<td style='padding:15px;><form method='get' action='NbaTicketList'>"
+                    + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nflid' value='"
+                    + nba.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
+                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
                     + "<input type='hidden' name='matchname' value='" + nba.getMatchName() + "'>"
                     + "<input type='hidden' name='matchstadium' value='" + nba.getMatchStadium() + "'>"
                     + "<input type='hidden' name='matchcity' value='" + nba.getMatchCity() + "'>"

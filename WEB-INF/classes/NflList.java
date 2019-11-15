@@ -33,7 +33,7 @@ public class NflList extends HttpServlet {
 
         try {
             allNfl = MySqlDataStoreUtilities.getNfls();
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -56,7 +56,8 @@ public class NflList extends HttpServlet {
 
             String date = nfl.getMatchDate();
             String time = date.substring(11, 16);
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
+                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
 
             pw.print("<tr>");
             pw.print("<td width='15%'>");
@@ -71,10 +72,10 @@ public class NflList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + nfl.getMinPrice() + "</h5></td>");
 
-            pw.print("<td style='padding:5px;'><form method='get' action='NflTicketList'>" + "<input type='hidden' name='type' value='nlf'>"
-                    + "<input type='hidden' name='nflid' value='" + nfl.getMatchId() + "'>"
-                    + "<input type='hidden' name='date' value='" + date.substring(0, 10) + "'>"
-                    + "<input type='hidden' name='time' value='" + result + "'>"
+            pw.print("<td style='padding:15px;'><form method='get' action='NflTicketList'>"
+                    + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nflid' value='"
+                    + nfl.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
+                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
                     + "<input type='hidden' name='matchname' value='" + nfl.getMatchName() + "'>"
                     + "<input type='hidden' name='matchstadium' value='" + nfl.getMatchStadium() + "'>"
                     + "<input type='hidden' name='matchcity' value='" + nfl.getMatchCity() + "'>"

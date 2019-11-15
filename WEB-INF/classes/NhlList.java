@@ -53,8 +53,9 @@ public class NhlList extends HttpServlet {
             Nhl ncaa = entry.getValue();
             String date = ncaa.getMatchDate();
 
-            String time = date.substring(11,16);
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
+            String time = date.substring(11, 16);
+            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
+                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
 
             pw.print("<tr>");
             pw.print("<td width='15%'>");
@@ -69,12 +70,11 @@ public class NhlList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td style='padding:5px;><form method='get' action='NhlTicketList'>" 
-                    + "<input type='hidden' name='name' value='" + entry.getKey() + "'>" 
-                    + "<input type='hidden' name='type' value='nlf'>"
-                    + "<input type='hidden' name='nhlid' value='" + ncaa.getMatchId() + "'>"
-                    + "<input type='hidden' name='date' value='" + date.substring(0, 10) + "'>"
-                    + "<input type='hidden' name='time' value='" + result + "'>"
+            pw.print("<td style='padding:15px;><form method='get' action='NhlTicketList'>"
+                    + "<input type='hidden' name='name' value='" + entry.getKey() + "'>"
+                    + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nhlid' value='"
+                    + ncaa.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
+                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
                     + "<input type='hidden' name='matchname' value='" + ncaa.getMatchName() + "'>"
                     + "<input type='hidden' name='matchstadium' value='" + ncaa.getMatchStadium() + "'>"
                     + "<input type='hidden' name='matchcity' value='" + ncaa.getMatchCity() + "'>"

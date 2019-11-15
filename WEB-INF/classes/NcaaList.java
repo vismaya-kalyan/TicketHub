@@ -72,7 +72,7 @@ public class NcaaList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td style='padding:5px;><form method='get' action='NcaaTicketList'>"
+            pw.print("<td style='padding:15px;><form method='get' action='NcaaTicketList'>"
                     + "<input type='hidden' name='type' value='Ncaa'>" + "<input type='hidden' name='ncaaid' value='"
                     + ncaa.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
                     + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
