@@ -64,7 +64,7 @@ public class Cart extends HttpServlet {
 			for (OrderItem oi : utility.getCustomerOrders()) 
 			{
 				pw.print("<tr>");
-				pw.print("<td>"+i+".</td><td>"+oi.getMatchName()+"</td><td>: "+oi.getPrice()+"</td>");
+				pw.print("<td >"+i+".</td><td width='400'>"+oi.getMatchName()+"</td><td>: "+oi.getPrice()+"</td>");
 				pw.print("<input type='hidden' name='orderName' value='"+oi.getZoneName()+"'>");
 				pw.print("<input type='hidden' name='orderPrice' value='"+oi.getPrice()+"'>");
 				pw.print("</tr>");
