@@ -79,12 +79,6 @@ public class NflTicketList extends HttpServlet {
                     + "<input type='hidden' name='zone' value='" + nfl.getZoneName() + "'>"
                     + "<input type='hidden' name='price' value='" + nfl.getCurrentPrice() + "'>"
                     + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
-            // pw.print("<td><form method='post' action='NflTicketList'>" + "<input
-            // type='hidden' name='name' value='"
-            // + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"
-            // + "<input type='hidden' name='nflid' value='" + nfl.getMatchId() + "'>"
-            // + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
-
             pw.print("</tr>");
         }
         pw.print("</table></div></div></div><div class='clear'></div>");

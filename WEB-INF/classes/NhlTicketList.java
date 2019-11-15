@@ -70,7 +70,13 @@ public class NhlTicketList extends HttpServlet {
             pw.print("</ul></div></td>");
 
             pw.print("<td><h5>Price<br>" + nfl.getCurrentPrice() + "</h5></td>");
-
+            pw.print("<td><form method='post' action='Cart'>" + "<input type='hidden' name='matchName' value='"
+                    + matchname + "'>" + "<input type='hidden' name='name' value='" + nfl.getSectionName() + "'>"
+                    + "<input type='hidden' name='row' value='" + nfl.getRowInfo() + "'>"
+                    + "<input type='hidden' name='seat' value='" + nfl.getSeatNumber() + "'>"
+                    + "<input type='hidden' name='zone' value='" + nfl.getZoneName() + "'>"
+                    + "<input type='hidden' name='price' value='" + nfl.getCurrentPrice() + "'>"
+                    + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
             pw.print("</tr>");
         }
         pw.print("</table></div></div></div><div class='clear'></div>");

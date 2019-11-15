@@ -69,7 +69,7 @@ public class NhlList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><form method='get' action='NhlTicketList'>" 
+            pw.print("<td style='padding:5px;><form method='get' action='NhlTicketList'>" 
                     + "<input type='hidden' name='name' value='" + entry.getKey() + "'>" 
                     + "<input type='hidden' name='type' value='nlf'>"
                     + "<input type='hidden' name='nhlid' value='" + ncaa.getMatchId() + "'>"

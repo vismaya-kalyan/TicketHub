@@ -71,7 +71,7 @@ public class NflList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + nfl.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><form method='get' action='NflTicketList'>" + "<input type='hidden' name='type' value='nlf'>"
+            pw.print("<td style='padding:5px;'><form method='get' action='NflTicketList'>" + "<input type='hidden' name='type' value='nlf'>"
                     + "<input type='hidden' name='nflid' value='" + nfl.getMatchId() + "'>"
                     + "<input type='hidden' name='date' value='" + date.substring(0, 10) + "'>"
                     + "<input type='hidden' name='time' value='" + result + "'>"
