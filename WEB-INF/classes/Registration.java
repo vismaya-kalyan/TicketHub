@@ -101,19 +101,19 @@ public class Registration extends HttpServlet {
 		pw.print("<div id='container' class='width' style='float: none;>");
 		pw.print("<h2 class='title meta'><a style='text-align: center; font-size: 24px;'>Registration</a></h2>"
 				+ "<div class='entry'>"
-				+ "<div style='width:400px; margin:25px; margin-left: auto;margin-right: auto;'>");
+				+ "<div style='width:400px; margin:25px; margin-left: auto;margin-right: auto;text-align:center'>");
 		if (error)
 			pw.print("<h4 style='color:red'>" + error_msg + "</h4>");
-		pw.print("<form method='post' action='Registration'>" + "<table style='width:100%'><tr><td>"
-				+ "<h3>Username</h3></td><td><input type='text' name='username' value='' class='input' required></input>"
-				+ "</td></tr><tr><td>"
-				+ "<h3>Password</h3></td><td><input type='password' name='password' value='' class='input' required></input>"
-				+ "</td></tr><tr><td>"
-				+ "<h3>Re-Password</h3></td><td><input type='password' name='repassword' value='' class='input' required></input>"
-				+ "</td></tr><tr><td>"
-				+ "<h3>User Type</h3></td><td><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='retailer'>Store Manager</option><option value='manager'>Salesman</option></select>"
+		pw.print("<form method='post' action='Registration'>" + "<table style='width:100%'><tr><td style='border:white;'>"
+				+ "<h3>Username</h3></td><td style='border:white;'><input class='search' type='text' name='username' value='' class='input' required></input>"
+				+ "</td></tr><tr><td style='border:white;'>"
+				+ "<h3>Password</h3></td><td style='border:white;'><input class='search' type='password' name='password' value='' class='input' required></input>"
+				+ "</td></tr><tr><td style='border:white;'>"
+				+ "<h3>Re-Password</h3></td><td style='border:white;'><input  class='search' type='password' name='repassword' value='' class='input' required></input>"
+				+ "</td></tr><tr><td style='border:white;'>"
+				+ "<h3>User Type</h3></td><td style='border:white;'><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='retailer'>Store Manager</option></select>"
 				+ "</td></tr></table>"
-				+ "<input type='submit' class='btnbuy' name='ByUser' value='Create User' style='float: right;height: 20px margin: 20px; margin-right: 10px;'></input>"
+				+ "<div style='text-align:center'><input type='submit' class='btnbuy' name='ByUser' value='Create User' style='height: 20px margin: 20px; margin-right: 10px;'></input></div>"
 				+ "</form>" + "</div></div><div class='clear'></div>");
 		utility.printHtml("Footer.html");
 	}

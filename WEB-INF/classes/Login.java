@@ -80,15 +80,15 @@ public class Login extends HttpServlet {
 			pw.print("<h4 style='color:red'>" + session.getAttribute("login_msg") + "</h4>");
 			session.removeAttribute("login_msg");
 		}
-		pw.print("<form method='post' action='Login'>" + "<table style='width:100%'><tr><td>"
-				+ "<h3>Username</h3></td><td><input type='text' name='username' value='' class='input' required></input>"
-				+ "</td></tr><tr><td>"
-				+ "<h3>Password</h3></td><td><input type='password' name='password' value='' class='input' required></input>"
-				+ "</td></tr><tr><td>"
-				+ "<h3>User Type</h3></td><td><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='retailer'>Store Manager</option><option value='manager'>Salesman</option></select>"
-				+ "</td></tr><tr><td></td><td>"
+		pw.print("<form method='post' action='Login'>" + "<table style='width:100%'><tr><td style='border:white;'>"
+				+ "<h3>Username</h3></td><td style='border:white;'><input class='search' type='text' name='username' value='' class='input' required></input>"
+				+ "</td></tr><tr><td style='border:white;'>"
+				+ "<h3>Password</h3></td><td style='border:white;'><input class='search' type='password' name='password' value='' class='input' required></input>"
+				+ "</td></tr><tr><td style='border:white;'>"
+				+ "<h3>User Type</h3></td><td style='border:white;'><select name='usertype' class='input'><option value='customer' selected>Customer</option><option value='retailer'>Store Manager</option><option value='manager'>Salesman</option></select>"
+				+ "</td></tr><tr><td style='border:white;'></td><td style='border:white;'>"
 				+ "<input type='submit' class='btnbuy' value='Login' style='float: right;height: 20px margin: 20px; margin-right: 10px;'></input>"
-				+ "</td></tr><tr><td></td><td>"
+				+ "</td></tr><tr><td style='border:white;'></td><td style='border:white;padding:10px;'>"
 				+ "<strong><a class='' href='Registration' style='float: right;height: 20px margin: 20px;'>New User? Register here!</a></strong>"
 				+ "</td></tr></table>" + "</form>" + "</div></div></div>");
 		utility.printHtml("Footer.html");

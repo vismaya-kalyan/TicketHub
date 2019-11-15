@@ -176,7 +176,16 @@ form input, form select, form textarea {
 	font-size: 0.9em;
 }
 
-
+form input.search{
+	padding: 5px;
+	color: #000000;
+	border: 1px solid #31708f;
+	border-right: 1px solid #286090;
+	border-bottom: 1px solid #286090;
+	background-color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+}
 
 
 form input.formbutton {
@@ -376,7 +385,7 @@ nav ul li.selected a:hover {
 
 
 .entry img{
-	margin-top: 50px;
+	margin-top: 20px;
 		width:150px;
 		height: 150px;
 		border-radius: 15%;
