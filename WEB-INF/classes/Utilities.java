@@ -51,20 +51,33 @@ public class Utilities extends HttpServlet {
 		String result = HtmlToString(file);
 		// to print the right navigation in header of username cart and logout etc
 		if (file == "Header.html") {
-			// result=result+"<div id='menu' style='float: right;'><ul>";
+			result = result + "<div id='menu' style='float: right;'><ul>";
 			if (session.getAttribute("username") != null) {
 				String username = session.getAttribute("username").toString();
 				username = Character.toUpperCase(username.charAt(0)) + username.substring(1);
-				result = result + "<li><a href='ViewOrder'><span class='glyphicon'>ViewOrder</span></a></li>"
-						+ "<li><a><span class='glyphicon'>Hello," + username + "</span></a></li>"
-						+ "<li><a href='Account'><span class='glyphicon'>Account</span></a></li>"
-						+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
-			} else
+				String userType = session.getAttribute("usertype").toString();
+				switch (userType) {
+				case "customer":
+					result = result + "<li><a href='ViewOrder'><span class='glyphicon'>ViewOrder</span></a></li>"
+							+ "<li><a><span class='glyphicon'>Hello, " + username + "</span></a></li>"
+							+ "<li><a href='Account'><span class='glyphicon'>Account</span></a></li>"
+							+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
+					break;
+				case "manager":
+					result = result
+							+ "<li><a href='StoreManagerHome'><span class='glyphicon'>ViewProduct</span></a></li>"
+							+ "<li><a><span class='glyphicon'>Hello, " + username + "</span></a></li>"
+							+ "<li><a href='Logout'><span class='glyphicon'>Logout</span></a></li>";
+					break;
+				}
+			} else {
 				result = result + "<li><a href='ViewOrder'><span class='glyphicon'>View Order</span></a></li>"
 						+ "<li><a href='Login'><span class='glyphicon'>Login</span></a></li>";
+			}
 			result = result + "<li><a href='Cart'><span class='glyphicon'>Cart(" + CartCount()
-					+ ")</span></a></li></ul></div></div><div id='page'>";
+					+ ")</span></a></li></ul></div></div><div id='page'>" + "</nav>";
 			pw.print(result);
+
 		} else
 			pw.print(result);
 	}
@@ -149,17 +162,14 @@ public class Utilities extends HttpServlet {
 	 * getUser Function checks the user is a customer or retailer or manager and
 	 * returns the user class variable.
 	 */
-	public User getUser(){
-		
+	public User getUser() {
+
 		String usertype = usertype();
-		HashMap<String, User> hm=new HashMap<String, User>();
-		try
-		{		
-			hm=MySqlDataStoreUtilities.selectUser();
+		HashMap<String, User> hm = new HashMap<String, User>();
+		try {
+			hm = MySqlDataStoreUtilities.selectUser();
+		} catch (Exception e) {
 		}
-		catch(Exception e)
-		{
-		}	
 		User user = hm.get(username());
 		return user;
 	}
@@ -173,25 +183,23 @@ public class Utilities extends HttpServlet {
 	}
 
 	/* getOrdersPaymentSize Function gets the size of OrderPayment */
-	public int getOrderPaymentSize(){
+	public int getOrderPaymentSize() {
 		HashMap<Integer, ArrayList<OrderPayment>> orderPayments = new HashMap<Integer, ArrayList<OrderPayment>>();
 		String TOMCAT_HOME = System.getProperty("catalina.home");
-			try
-			{
-				// FileInputStream fileInputStream = new FileInputStream(new File(TOMCAT_HOME+"\\webapps\\assignment_1\\PaymentDetails.txt"));
-				// ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);	      
-				orderPayments = MySqlDataStoreUtilities.selectOrder();
-			}
-			catch(Exception e)
-			{
-			
-			}
-			int size=0;
-			for(Map.Entry<Integer, ArrayList<OrderPayment>> entry : orderPayments.entrySet()){
-					 size=size + 1;
-					 
-			}
-			return size;		
+		try {
+			// FileInputStream fileInputStream = new FileInputStream(new
+			// File(TOMCAT_HOME+"\\webapps\\assignment_1\\PaymentDetails.txt"));
+			// ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+			orderPayments = MySqlDataStoreUtilities.selectOrder();
+		} catch (Exception e) {
+
+		}
+		int size = 0;
+		for (Map.Entry<Integer, ArrayList<OrderPayment>> entry : orderPayments.entrySet()) {
+			size = size + 1;
+
+		}
+		return size;
 	}
 
 	/* CartCount Function gets the size of User Orders */
@@ -201,126 +209,138 @@ public class Utilities extends HttpServlet {
 		return 0;
 	}
 
-		/* StoreProduct Function stores the Purchased product in Orders HashMap according to the User Names.*/
+	/*
+	 * StoreProduct Function stores the Purchased product in Orders HashMap
+	 * according to the User Names.
+	 */
 
-	public void storeProduct(String matchName,String zoneName, double price,String row, String seat){
-		if(!OrdersHashMap.orders.containsKey(username())){	
+	public void storeProduct(String matchName, String zoneName, double price, String row, String seat) {
+		if (!OrdersHashMap.orders.containsKey(username())) {
 			ArrayList<OrderItem> arr = new ArrayList<OrderItem>();
 			OrdersHashMap.orders.put(username(), arr);
 		}
 		ArrayList<OrderItem> orderItems = OrdersHashMap.orders.get(username());
-		OrderItem orderitem = new OrderItem(matchName, zoneName, price, row ,seat);
-			orderItems.add(orderitem);
-		System.out.println("Printing from store product of the hashmap "+ OrdersHashMap.orders);
+		OrderItem orderitem = new OrderItem(matchName, zoneName, price, row, seat);
+		orderItems.add(orderitem);
+		System.out.println("Printing from store product of the hashmap " + OrdersHashMap.orders);
 
 		// if(type.equals("consoles")){
-		// 	Console console;
-		// 	console = SaxParserDataStore.consoles.get(name);
-		// 	OrderItem orderitem = new OrderItem(console.getName(), console.getPrice(), console.getImage(), console.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Console console;
+		// console = SaxParserDataStore.consoles.get(name);
+		// OrderItem orderitem = new OrderItem(console.getName(), console.getPrice(),
+		// console.getImage(), console.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("tvs")){
-		// 	Tv tv;
-		// 	tv = SaxParserDataStore.tvs.get(name);
-		// 	OrderItem orderitem = new OrderItem(tv.getName(), tv.getPrice(), tv.getImage(), tv.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Tv tv;
+		// tv = SaxParserDataStore.tvs.get(name);
+		// OrderItem orderitem = new OrderItem(tv.getName(), tv.getPrice(),
+		// tv.getImage(), tv.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("soundSystems")){
-		// 	SoundSystem soundSystem;
-		// 	soundSystem = SaxParserDataStore.soundSystems.get(name);
-		// 	OrderItem orderitem = new OrderItem(soundSystem.getName(), soundSystem.getPrice(), soundSystem.getImage(), soundSystem.getRetailer());
-		// 	orderItems.add(orderitem);
+		// SoundSystem soundSystem;
+		// soundSystem = SaxParserDataStore.soundSystems.get(name);
+		// OrderItem orderitem = new OrderItem(soundSystem.getName(),
+		// soundSystem.getPrice(), soundSystem.getImage(), soundSystem.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("phones")){
-		// 	Phone phone;
-		// 	phone = SaxParserDataStore.phones.get(name);
-		// 	OrderItem orderitem = new OrderItem(phone.getName(),phone.getPrice(), phone.getImage(), phone.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Phone phone;
+		// phone = SaxParserDataStore.phones.get(name);
+		// OrderItem orderitem = new OrderItem(phone.getName(),phone.getPrice(),
+		// phone.getImage(), phone.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("headphones")){
-		// 	Headphone headphone;
-		// 	headphone = SaxParserDataStore.headphones.get(name);
-		// 	OrderItem orderitem = new OrderItem(headphone.getName(),headphone.getPrice(), headphone.getImage(), headphone.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Headphone headphone;
+		// headphone = SaxParserDataStore.headphones.get(name);
+		// OrderItem orderitem = new OrderItem(headphone.getName(),headphone.getPrice(),
+		// headphone.getImage(), headphone.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("laptops")){
-		// 	Laptop laptop;
-		// 	laptop = SaxParserDataStore.laptops.get(name);
-		// 	OrderItem orderitem = new OrderItem(laptop.getName(),laptop.getPrice(), laptop.getImage(), laptop.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Laptop laptop;
+		// laptop = SaxParserDataStore.laptops.get(name);
+		// OrderItem orderitem = new OrderItem(laptop.getName(),laptop.getPrice(),
+		// laptop.getImage(), laptop.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("smartWatches")){
-		// 	SmartWatch smartWatch;
-		// 	smartWatch = SaxParserDataStore.smartWatches.get(name);
-		// 	OrderItem orderitem = new OrderItem(smartWatch.getName(),smartWatch.getPrice(), smartWatch.getImage(), smartWatch.getRetailer());
-		// 	orderItems.add(orderitem);
+		// SmartWatch smartWatch;
+		// smartWatch = SaxParserDataStore.smartWatches.get(name);
+		// OrderItem orderitem = new
+		// OrderItem(smartWatch.getName(),smartWatch.getPrice(), smartWatch.getImage(),
+		// smartWatch.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("vas")){
-		// 	Va va = null;
-		// 	va = SaxParserDataStore.vas.get(name);
-		// 	OrderItem orderitem = new OrderItem(va.getName(), va.getPrice(), va.getImage(), va.getRetailer());
-		// 	orderItems.add(orderitem);
+		// Va va = null;
+		// va = SaxParserDataStore.vas.get(name);
+		// OrderItem orderitem = new OrderItem(va.getName(), va.getPrice(),
+		// va.getImage(), va.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("fitnessWatches")){
-		// 	FitnessWatch fitnessWatch = null;
-		// 	fitnessWatch = SaxParserDataStore.fitnessWatches.get(name);
-		// 	OrderItem orderitem = new OrderItem(fitnessWatch.getName(), fitnessWatch.getPrice(), fitnessWatch.getImage(), fitnessWatch.getRetailer());
-		// 	orderItems.add(orderitem);
+		// FitnessWatch fitnessWatch = null;
+		// fitnessWatch = SaxParserDataStore.fitnessWatches.get(name);
+		// OrderItem orderitem = new OrderItem(fitnessWatch.getName(),
+		// fitnessWatch.getPrice(), fitnessWatch.getImage(),
+		// fitnessWatch.getRetailer());
+		// orderItems.add(orderitem);
 		// }
 		// if(type.equals("wirelessplan")){
-		// 	WirelessPlan wirelessPlan = null;
-		// 	wirelessPlan = SaxParserDataStore.wirelessPlans.get(name);
-		// 	OrderItem orderitem = new OrderItem(wirelessPlan.getName(), wirelessPlan.getPrice(), wirelessPlan.getImage(), wirelessPlan.getRetailer());
-		// 	orderItems.add(orderitem);
+		// WirelessPlan wirelessPlan = null;
+		// wirelessPlan = SaxParserDataStore.wirelessPlans.get(name);
+		// OrderItem orderitem = new OrderItem(wirelessPlan.getName(),
+		// wirelessPlan.getPrice(), wirelessPlan.getImage(),
+		// wirelessPlan.getRetailer());
+		// orderItems.add(orderitem);
 		// }
-		// if(type.equals("accessories")){	
-		// 	Accessory accessory = SaxParserDataStore.accessories.get(name); 
-		// 	OrderItem orderitem = new OrderItem(accessory.getName(), accessory.getPrice(), accessory.getImage(), accessory.getRetailer());
-		// 	orderItems.add(orderitem);
+		// if(type.equals("accessories")){
+		// Accessory accessory = SaxParserDataStore.accessories.get(name);
+		// OrderItem orderitem = new OrderItem(accessory.getName(),
+		// accessory.getPrice(), accessory.getImage(), accessory.getRetailer());
+		// orderItems.add(orderitem);
 		// }
-		
+
 	}
-	
 
 	// store the payment details for orders
-	public void storePayment(int orderId,
-	String orderName,double orderPrice,String userAddress,String creditCardNo){
-	// HashMap<Integer, ArrayList<OrderPayment>> orderPayments= new HashMap<Integer, ArrayList<OrderPayment>>();
-	// String TOMCAT_HOME = System.getProperty("catalina.home");
-	// 	// get the payment details file 
-	HashMap<Integer, ArrayList<OrderPayment>> orderPayments= new HashMap<Integer, ArrayList<OrderPayment>>();
-		// get the payment details file 
-	try
-	{
-		orderPayments=MySqlDataStoreUtilities.selectOrder();
-	}
-	catch(Exception e)
-	{
-		
-	}
-	if(orderPayments==null)
-	{
-		orderPayments = new HashMap<Integer, ArrayList<OrderPayment>>();
-	}
-		// if there exist order id already add it into same list for order id or create a new record with order id
-		
-	if(!orderPayments.containsKey(orderId)){	
-		ArrayList<OrderPayment> arr = new ArrayList<OrderPayment>();
-		orderPayments.put(orderId, arr);
-	}
-	ArrayList<OrderPayment> listOrderPayment = orderPayments.get(orderId);		
-	OrderPayment orderpayment = new OrderPayment(orderId,username(),orderName,orderPrice,userAddress,creditCardNo);
-	listOrderPayment.add(orderpayment);	
-		
+	public void storePayment(int orderId, String orderName, double orderPrice, String userAddress,
+			String creditCardNo) {
+		// HashMap<Integer, ArrayList<OrderPayment>> orderPayments= new HashMap<Integer,
+		// ArrayList<OrderPayment>>();
+		// String TOMCAT_HOME = System.getProperty("catalina.home");
+		// // get the payment details file
+		HashMap<Integer, ArrayList<OrderPayment>> orderPayments = new HashMap<Integer, ArrayList<OrderPayment>>();
+		// get the payment details file
+		try {
+			orderPayments = MySqlDataStoreUtilities.selectOrder();
+		} catch (Exception e) {
+
+		}
+		if (orderPayments == null) {
+			orderPayments = new HashMap<Integer, ArrayList<OrderPayment>>();
+		}
+		// if there exist order id already add it into same list for order id or create
+		// a new record with order id
+
+		if (!orderPayments.containsKey(orderId)) {
+			ArrayList<OrderPayment> arr = new ArrayList<OrderPayment>();
+			orderPayments.put(orderId, arr);
+		}
+		ArrayList<OrderPayment> listOrderPayment = orderPayments.get(orderId);
+		OrderPayment orderpayment = new OrderPayment(orderId, username(), orderName, orderPrice, userAddress,
+				creditCardNo);
+		listOrderPayment.add(orderpayment);
+
 		// add order details into database
-	try
-	{	
-		MySqlDataStoreUtilities.insertOrder(orderId,username(),orderName,orderPrice,userAddress,creditCardNo);
+		try {
+			MySqlDataStoreUtilities.insertOrder(orderId, username(), orderName, orderPrice, userAddress, creditCardNo);
+		} catch (Exception e) {
+			System.out.println("inside exception file not written properly");
+		}
 	}
-	catch(Exception e)
-	{
-		System.out.println("inside exception file not written properly");
-	}	
-}
 
 }

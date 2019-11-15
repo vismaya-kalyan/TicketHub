@@ -2,6 +2,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class MySqlDataStoreUtilities {
     static Connection conn = null;
@@ -77,7 +78,7 @@ public class MySqlDataStoreUtilities {
             pst.execute();
         } catch (Exception e) {
 
-            System.out.println("Ecxeption from storing the order = "+e);
+            System.out.println("Ecxeption from storing the order = " + e);
 
         }
     }
@@ -391,6 +392,49 @@ public class MySqlDataStoreUtilities {
         }
 
         return msg;
+    }
+
+    public static ArrayList<String> getCities() {
+        ArrayList<String> cities = new ArrayList<String>();
+        try {
+            getConnection();
+
+            String selectCities = "select distinct matchCity from  matchlist;";
+            PreparedStatement pst = conn.prepareStatement(selectCities);
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                cities.add(rs.getString("matchCity"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return cities;
+    }
+
+    public static HashMap<String, Matches> getCityMatches(String matchcity) {
+        HashMap<String, Matches> hm = new HashMap<String, Matches>();
+        try {
+            getConnection();
+
+            String selectMatches = "select * from  matchlist where matchCity=?;";
+            PreparedStatement pst = conn.prepareStatement(selectMatches);
+            pst.setString(1, matchcity);
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                Matches nfl = new Matches(rs.getString("matchCategory"), rs.getString("matchName"),
+                        rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
+                hm.put(rs.getString("matchId"), nfl);
+                nfl.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
     }
 
 }
