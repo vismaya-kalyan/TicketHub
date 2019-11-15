@@ -51,10 +51,11 @@ public class Payment extends HttpServlet {
 			// iterate through each order
 
 			for (OrderItem oi : utility.getCustomerOrders()) {
-        
-				//set the parameter for each column and execute the prepared statement
-				System.out.println("Saving these orders to the database "+orderId+oi.getMatchName()+oi.getPrice()+userAddress+creditCardNo);
-				utility.storePayment(orderId,oi.getMatchName(),oi.getPrice(),userAddress,creditCardNo);
+
+				// set the parameter for each column and execute the prepared statement
+				System.out.println("Saving these orders to the database " + orderId + oi.getMatchName() + oi.getPrice()
+						+ userAddress + creditCardNo);
+				utility.storePayment(orderId, oi.getMatchName(), oi.getPrice(), userAddress, creditCardNo);
 
 			}
 
@@ -95,13 +96,15 @@ public class Payment extends HttpServlet {
 		String pass = PASSWORD;
 		String[] to = { RECIPIENT }; // list of recipient email addresses
 		String subject = "Have Fun!";
-		String body = "Enjoy your tickets to \n";
+
+		StringBuilder body = new StringBuilder("Enjoy your tickets to ");
 
 		for (OrderItem oi : utility.getCustomerOrders()) {
-			body = body + oi.getMatchName() + "\n";
+			System.out.println("oi.getMatchName()" + oi.getMatchName());
+			body.append(oi.getMatchName());
 		}
 
-		sendFromGMail(from, pass, to, subject, body);
+		sendFromGMail(from, pass, to, subject, body.toString());
 
 	}
 
