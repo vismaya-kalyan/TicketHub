@@ -81,7 +81,7 @@ public class NbaList extends HttpServlet {
                     + "<input type='hidden' name='matchcity' value='" + nba.getMatchCity() + "'>"
                     + "<input type='hidden' name='matchstate' value='" + nba.getMatchState() + "'>"
                     + "<input type='hidden' name='matchcountry' value='US'>"
-                    + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
+                    + "<input type='submit' class='btnbuy' value='Book tickets'></form></td>");
 
             pw.print("</tr>");
         }
