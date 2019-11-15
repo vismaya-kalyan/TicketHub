@@ -54,6 +54,10 @@ public class NflTicketList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NFL Listings</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
+        if (hm.isEmpty()) {
+            pw.print("<h2>No tickets avaiable</h2>");
+        }
+
         for (Map.Entry<String, Listings> entry : hm.entrySet()) {
             Listings nfl = entry.getValue();
             del = nfl.getDeliveryMethodList();
@@ -67,16 +71,14 @@ public class NflTicketList extends HttpServlet {
 
             pw.print("</ul></div></td>");
 
-            
             pw.print("<td><h5>Price<br>" + nfl.getCurrentPrice() + "</h5></td>");
-            pw.print("<td><form method='post' action='Cart'>" +
-                    "<input type='hidden' name='matchName' value='"+matchname+"'>"+
-					"<input type='hidden' name='name' value='"+nfl.getSectionName()+"'>"+
-					"<input type='hidden' name='row' value='"+nfl.getRowInfo()+"'>"+
-					"<input type='hidden' name='seat' value='"+nfl.getSeatNumber()+"'>"+
-                    "<input type='hidden' name='zone' value='"+nfl.getZoneName()+"'>"+
-                    "<input type='hidden' name='price' value='"+nfl.getCurrentPrice()+"'>"+
-					"<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
+            pw.print("<td><form method='post' action='Cart'>" + "<input type='hidden' name='matchName' value='"
+                    + matchname + "'>" + "<input type='hidden' name='name' value='" + nfl.getSectionName() + "'>"
+                    + "<input type='hidden' name='row' value='" + nfl.getRowInfo() + "'>"
+                    + "<input type='hidden' name='seat' value='" + nfl.getSeatNumber() + "'>"
+                    + "<input type='hidden' name='zone' value='" + nfl.getZoneName() + "'>"
+                    + "<input type='hidden' name='price' value='" + nfl.getCurrentPrice() + "'>"
+                    + "<input type='submit' class='btnbuy' value='Buy Now'></form></td>");
             // pw.print("<td><form method='post' action='NflTicketList'>" + "<input
             // type='hidden' name='name' value='"
             // + entry.getKey() + "'>" + "<input type='hidden' name='type' value='nlf'>"

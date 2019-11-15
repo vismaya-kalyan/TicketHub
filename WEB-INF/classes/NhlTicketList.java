@@ -53,6 +53,9 @@ public class NhlTicketList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NHL Listings</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
+        if (hm.isEmpty()) {
+            pw.print("<h2>No tickets avaiable</h2>");
+        }
         for (Map.Entry<String, Listings> entry : hm.entrySet()) {
             Listings nfl = entry.getValue();
             del = nfl.getDeliveryMethodList();
