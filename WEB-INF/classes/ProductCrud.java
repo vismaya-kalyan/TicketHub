@@ -1,5 +1,6 @@
 import java.io.*;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,10 +30,10 @@ public class ProductCrud extends HttpServlet {
         String deliveryMethod = "", rowInfo = "", seatNumber = "", sectionName = "", zoneName = "",
                 sellerSectionName = "";
 
-        HashMap<String, Nfl> allNfl = new HashMap<String, Nfl>();
-        HashMap<String, Nba> allNba = new HashMap<String, Nba>();
-        HashMap<String, Nhl> allNhl = new HashMap<String, Nhl>();
-        HashMap<String, Ncaa> allNcaa = new HashMap<String, Ncaa>();
+        HashMap<Date, Nfl> allNfl = new HashMap<Date, Nfl>();
+        HashMap<Date, Nba> allNba = new HashMap<Date, Nba>();
+        HashMap<Date, Nhl> allNhl = new HashMap<Date, Nhl>();
+        HashMap<Date, Ncaa> allNcaa = new HashMap<Date, Ncaa>();
 
         if (action.equals("addMatch")) {
             category = request.getParameter("category");

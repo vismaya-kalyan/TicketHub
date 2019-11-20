@@ -4,6 +4,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+
 public class MySqlDataStoreUtilities {
     static Connection conn = null;
 
@@ -151,8 +152,8 @@ public class MySqlDataStoreUtilities {
         return hm;
     }
 
-    public static HashMap<String, Nfl> getNfls() {
-        HashMap<String, Nfl> hm = new HashMap<String, Nfl>();
+    public static HashMap<Date, Nfl> getNfls() {
+        HashMap<Date, Nfl> hm = new HashMap<Date, Nfl>();
         try {
             getConnection();
 
@@ -160,13 +161,17 @@ public class MySqlDataStoreUtilities {
             PreparedStatement pst = conn.prepareStatement(selectNfl);
             pst.setString(1, "NFL");
             ResultSet rs = pst.executeQuery();
-            // System.out.println("rs" + rs);
+            
             while (rs.next()) {
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                Date date = formatter.parse(rs.getString("matchDate"));
+                
                 Nfl nfl = new Nfl(rs.getString("matchCategory"), rs.getString("matchName"),
                         rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
-                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), date,
                         rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
-                hm.put(rs.getString("matchId"), nfl);
+                hm.put(date, nfl);
                 nfl.setMatchId(rs.getInt("matchId"));
 
             }
@@ -176,8 +181,8 @@ public class MySqlDataStoreUtilities {
         return hm;
     }
 
-    public static HashMap<String, Nba> getNbas() {
-        HashMap<String, Nba> hm = new HashMap<String, Nba>();
+    public static HashMap<Date, Nba> getNbas() {
+        HashMap<Date, Nba> hm = new HashMap<Date, Nba>();
         try {
             getConnection();
 
@@ -187,11 +192,13 @@ public class MySqlDataStoreUtilities {
             ResultSet rs = pst.executeQuery();
             // System.out.println("rs" + rs);
             while (rs.next()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                Date date = formatter.parse(rs.getString("matchDate"));
                 Nba nba = new Nba(rs.getString("matchCategory"), rs.getString("matchName"),
                         rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
-                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), date,
                         rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
-                hm.put(rs.getString("matchId"), nba);
+                hm.put(date, nba);
                 nba.setMatchId(rs.getInt("matchId"));
 
             }
@@ -202,8 +209,8 @@ public class MySqlDataStoreUtilities {
     }
 
     // Getting NCAA events
-    public static HashMap<String, Ncaa> getNcaa() {
-        HashMap<String, Ncaa> hm = new HashMap<String, Ncaa>();
+    public static HashMap<Date, Ncaa> getNcaa() {
+        HashMap<Date, Ncaa> hm = new HashMap<Date, Ncaa>();
         try {
             getConnection();
 
@@ -213,11 +220,13 @@ public class MySqlDataStoreUtilities {
             ResultSet rs = pst.executeQuery();
             // System.out.println("rs" + rs);
             while (rs.next()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                Date date = formatter.parse(rs.getString("matchDate"));
                 Ncaa nba = new Ncaa(rs.getString("matchCategory"), rs.getString("matchName"),
                         rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
-                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), date,
                         rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
-                hm.put(rs.getString("matchId"), nba);
+                hm.put(date, nba);
                 nba.setMatchId(rs.getInt("matchId"));
 
             }
@@ -228,8 +237,8 @@ public class MySqlDataStoreUtilities {
     }
 
     // Getting Nhl events
-    public static HashMap<String, Nhl> getNhl() {
-        HashMap<String, Nhl> hm = new HashMap<String, Nhl>();
+    public static HashMap<Date, Nhl> getNhl() {
+        HashMap<Date, Nhl> hm = new HashMap<Date, Nhl>();
         try {
             getConnection();
 
@@ -237,13 +246,15 @@ public class MySqlDataStoreUtilities {
             PreparedStatement pst = conn.prepareStatement(selectNfl);
             pst.setString(1, "NHL");
             ResultSet rs = pst.executeQuery();
-            // System.out.println("rs" + rs);
+            
             while (rs.next()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                Date date = formatter.parse(rs.getString("matchDate"));
                 Nhl nba = new Nhl(rs.getString("matchCategory"), rs.getString("matchName"),
                         rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
-                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), date,
                         rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
-                hm.put(rs.getString("matchId"), nba);
+                hm.put(date, nba);
                 nba.setMatchId(rs.getInt("matchId"));
 
             }
@@ -262,7 +273,7 @@ public class MySqlDataStoreUtilities {
             PreparedStatement pst = conn.prepareStatement(selectNfl);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
-            System.out.println("rs" + rs);
+            
             while (rs.next()) {
                 Listings nfl = new Listings(rs.getInt("matchIdRef"), rs.getDouble("currentPrice"),
                         rs.getString("deliveryMethodList"), rs.getInt("quantity"), rs.getString("rowInfo"),
@@ -399,7 +410,7 @@ public class MySqlDataStoreUtilities {
         try {
             getConnection();
 
-            String selectCities = "select distinct matchCity from  matchlist;";
+            String selectCities = "select distinct matchCity from  matchlist order by matchCity ASC;";
             PreparedStatement pst = conn.prepareStatement(selectCities);
             ResultSet rs = pst.executeQuery();
             // System.out.println("rs" + rs);

@@ -12,7 +12,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.*;
 import java.text.DateFormat;
 import java.time.*;
-
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
 @WebServlet("/NbaList")
 
 public class NbaList extends HttpServlet {
@@ -26,8 +28,8 @@ public class NbaList extends HttpServlet {
         String name = null;
         String CategoryName = request.getParameter("maker");
 
-        HashMap<String, Nba> hm = new HashMap<String, Nba>();
-        HashMap<String, Nba> allNba = new HashMap<String, Nba>();
+        HashMap<Date, Nba> hm = new HashMap<Date, Nba>();
+        HashMap<Date, Nba> allNba = new HashMap<Date, Nba>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
 
         try {
@@ -40,6 +42,11 @@ public class NbaList extends HttpServlet {
             hm.putAll(allNba);
             name = "";
         }
+        Map<Date, Nba> sortedMap = new TreeMap<Date, Nba>(hm);
+        // Getting current date
+        SimpleDateFormat formatter= new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        Date dateOne = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(dateOne));
 
         Utilities utility = new Utilities(request, pw);
         utility.printHtml("Header.html");
@@ -48,46 +55,46 @@ public class NbaList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NBA</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
-        for (Map.Entry<String, Nba> entry : hm.entrySet()) {
-            Nba nba = entry.getValue();
+        for (Map.Entry<Date, Nba> entry : sortedMap.entrySet()) {
+            if (entry.getKey().after(dateOne)) {
 
-            String date = nba.getMatchDate();
+                Nba nba = entry.getValue();
 
-            String time = date.substring(11, 16);
+                Date date = nba.getMatchDate();
+                                
+                pw.print("<tr>");
+                pw.print("<td width='15%'>");
+                pw.print("<h5>" + date + "</h5>");
+                pw.print("<h5>" + date + "</h5>");
+                pw.print("</td>");
 
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
-                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
+                pw.print("<td><div id='shop_item'>");
+                pw.print("<h3>" + nba.getMatchName() + "</h3>");
+                pw.print("<h5>" + nba.getMatchStadium() + ", " + nba.getMatchCity() + ", " + nba.getMatchState() + ", US"
+                        + "</h5>");
 
-            pw.print("<tr>");
-            pw.print("<td width='15%'>");
-            pw.print("<h5>" + date.substring(0, 10) + "</h5>");
-            pw.print("<h5>" + result + "</h5>");
-            pw.print("</td>");
+                pw.print("</ul></div></td>");
+                pw.print("<td><h5>From<br>" + nba.getMinPrice() + "</h5></td>");
 
-            pw.print("<td><div id='shop_item'>");
-            pw.print("<h3>" + nba.getMatchName() + "</h3>");
-            pw.print("<h5>" + nba.getMatchStadium() + ", " + nba.getMatchCity() + ", " + nba.getMatchState() + ", US"
-                    + "</h5>");
+                pw.print("<td style='padding:15px';><form method='get' action='NbaTicketList'>"
+                        + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nflid' value='"
+                        + nba.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date
+                        + "'>" + "<input type='hidden' name='time' value='" + date + "'>"
+                        + "<input type='hidden' name='matchname' value='" + nba.getMatchName() + "'>"
+                        + "<input type='hidden' name='matchstadium' value='" + nba.getMatchStadium() + "'>"
+                        + "<input type='hidden' name='matchcity' value='" + nba.getMatchCity() + "'>"
+                        + "<input type='hidden' name='matchstate' value='" + nba.getMatchState() + "'>"
+                        + "<input type='hidden' name='matchcountry' value='US'>"
+                        + "<input type='submit' class='btnbuy' value='Book tickets'></form></td>");
 
-            pw.print("</ul></div></td>");
-            pw.print("<td><h5>From<br>" + nba.getMinPrice() + "</h5></td>");
+                pw.print("</tr>");
+            }
+            }
+        
+            pw.print("</table></div></div></div><div class='clear'></div>");
 
-            pw.print("<td style='padding:15px;><form method='get' action='NbaTicketList'>"
-                    + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nflid' value='"
-                    + nba.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
-                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
-                    + "<input type='hidden' name='matchname' value='" + nba.getMatchName() + "'>"
-                    + "<input type='hidden' name='matchstadium' value='" + nba.getMatchStadium() + "'>"
-                    + "<input type='hidden' name='matchcity' value='" + nba.getMatchCity() + "'>"
-                    + "<input type='hidden' name='matchstate' value='" + nba.getMatchState() + "'>"
-                    + "<input type='hidden' name='matchcountry' value='US'>"
-                    + "<input type='submit' class='btnbuy' value='Book tickets'></form></td>");
-
-            pw.print("</tr>");
-        }
-        pw.print("</table></div></div></div><div class='clear'></div>");
-
-        utility.printHtml("Footer.html");
+            utility.printHtml("Footer.html");
 
     }
+
 }

@@ -11,8 +11,9 @@ import java.util.Date;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.*;
-
+import java.util.TreeMap;
 @WebServlet("/NhlList")
 
 public class NhlList extends HttpServlet {
@@ -26,13 +27,13 @@ public class NhlList extends HttpServlet {
         String name = null;
         String CategoryName = request.getParameter("maker");
 
-        HashMap<String, Nhl> hm = new HashMap<String, Nhl>();
-        HashMap<String, Nhl> allNcaa = new HashMap<String, Nhl>();
+        HashMap<Date, Nhl> hm = new HashMap<Date, Nhl>();
+        HashMap<Date, Nhl> allNcaa = new HashMap<Date, Nhl>();
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
 
         try {
             allNcaa = MySqlDataStoreUtilities.getNhl();
-            System.out.println("allNfl" + allNcaa);
+            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -41,26 +42,26 @@ public class NhlList extends HttpServlet {
             hm.putAll(allNcaa);
             name = "";
         }
-
+        Map<Date, Nhl> sortedMap = new TreeMap<Date, Nhl>(hm);
+        SimpleDateFormat formatter= new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        Date dateOne = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(dateOne));
         Utilities utility = new Utilities(request, pw);
         utility.printHtml("Header.html");
         utility.printHtml("LeftNavigationBar.html");
         pw.print("<div id='content' class='two-column'><div class='post'><h2 class='title meta'>");
-        pw.print("<a style='font-size: 24px;'>NFL</a>");
+        pw.print("<a style='font-size: 24px;'>NHL</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
-        for (Map.Entry<String, Nhl> entry : hm.entrySet()) {
+        for (Map.Entry<Date, Nhl> entry : sortedMap.entrySet()) {
+            if (entry.getKey().after(dateOne)) {
             Nhl ncaa = entry.getValue();
-            String date = ncaa.getMatchDate();
-
-            String time = date.substring(11, 16);
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
-                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
+            Date date = ncaa.getMatchDate();
 
             pw.print("<tr>");
             pw.print("<td width='15%'>");
-            pw.print("<h5>" + date.substring(0, 10) + "</h5>");
-            pw.print("<h5>" + result + "</h5>");
+            pw.print("<h5>" + date + "</h5>");
+            pw.print("<h5>" + date + "</h5>");
             pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + ncaa.getMatchName() + "</h3>");
@@ -70,11 +71,11 @@ public class NhlList extends HttpServlet {
             pw.print("</ul></div></td>");
             pw.print("<td><h5>From<br>" + ncaa.getMinPrice() + "</h5></td>");
 
-            pw.print("<td style='padding:15px;><form method='get' action='NhlTicketList'>"
+            pw.print("<td style='padding:15px;'><form method='get' action='NhlTicketList'>"
                     + "<input type='hidden' name='name' value='" + entry.getKey() + "'>"
                     + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nhlid' value='"
-                    + ncaa.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
-                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
+                    + ncaa.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date
+                    + "'>" + "<input type='hidden' name='time' value='" + date + "'>"
                     + "<input type='hidden' name='matchname' value='" + ncaa.getMatchName() + "'>"
                     + "<input type='hidden' name='matchstadium' value='" + ncaa.getMatchStadium() + "'>"
                     + "<input type='hidden' name='matchcity' value='" + ncaa.getMatchCity() + "'>"
@@ -83,7 +84,7 @@ public class NhlList extends HttpServlet {
                     + "<input type='submit' class='btnbuy' value='Book tickets'></form></td>");
 
             pw.print("</tr>");
-        }
+        }}
         pw.print("</table></div></div></div><div class='clear'></div>");
 
         utility.printHtml("Footer.html");

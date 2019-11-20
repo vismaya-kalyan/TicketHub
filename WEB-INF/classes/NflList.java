@@ -13,6 +13,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.*;
 import java.text.DateFormat;
 import java.time.*;
+import java.util.TreeMap;
+import java.text.ParseException;
 
 @WebServlet("/NflList")
 
@@ -27,8 +29,9 @@ public class NflList extends HttpServlet {
         String name = null;
         String CategoryName = request.getParameter("maker");
 
-        HashMap<String, Nfl> hm = new HashMap<String, Nfl>();
-        HashMap<String, Nfl> allNfl = new HashMap<String, Nfl>();
+        HashMap<Date, Nfl> hm = new HashMap<Date, Nfl>();
+        HashMap<Date, Nfl> allNfl = new HashMap<Date, Nfl>();
+
         /* Checks the Tablets type whether it is microsft or sony or nintendo */
 
         try {
@@ -42,7 +45,11 @@ public class NflList extends HttpServlet {
             hm.putAll(allNfl);
             name = "";
         }
-
+        Map<Date, Nfl> sortedMap = new TreeMap<Date, Nfl>(hm);
+        SimpleDateFormat formatter= new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        Date dateOne = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(dateOne));
+        
         Utilities utility = new Utilities(request, pw);
         utility.printHtml("Header.html");
         utility.printHtml("LeftNavigationBar.html");
@@ -50,19 +57,18 @@ public class NflList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NFL</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
-        for (Map.Entry<String, Nfl> entry : hm.entrySet()) {
+        System.out.println("Hash map to loop for + "+hm.get("matchDate"));
+        for (Map.Entry<Date, Nfl> entry : sortedMap.entrySet()) {
+            if (entry.getKey().after(dateOne)) {
             Nfl nfl = entry.getValue();
             // Adding code for date
 
-            String date = nfl.getMatchDate();
-            String time = date.substring(11, 16);
-            String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
-                    .format(DateTimeFormatter.ofPattern("hh:mm a"));
+            Date dateInString = nfl.getMatchDate();
 
             pw.print("<tr>");
             pw.print("<td width='15%'>");
-            pw.print("<h5>" + date.substring(0, 10) + "</h5>");
-            pw.print("<h5>" + result + "</h5>");
+            pw.print("<h5>" + dateInString + "</h5>");
+            pw.print("<h5>" + dateInString + "</h5>");
             pw.print("</td>");
             pw.print("<td><div id='shop_item'>");
             pw.print("<h3>" + nfl.getMatchName() + "</h3>");
@@ -74,8 +80,8 @@ public class NflList extends HttpServlet {
 
             pw.print("<td style='padding:15px;'><form method='get' action='NflTicketList'>"
                     + "<input type='hidden' name='type' value='nlf'>" + "<input type='hidden' name='nflid' value='"
-                    + nfl.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + date.substring(0, 10)
-                    + "'>" + "<input type='hidden' name='time' value='" + result + "'>"
+                    + nfl.getMatchId() + "'>" + "<input type='hidden' name='date' value='" + dateInString
+                    + "'>" + "<input type='hidden' name='time' value='" + dateInString + "'>"
                     + "<input type='hidden' name='matchname' value='" + nfl.getMatchName() + "'>"
                     + "<input type='hidden' name='matchstadium' value='" + nfl.getMatchStadium() + "'>"
                     + "<input type='hidden' name='matchcity' value='" + nfl.getMatchCity() + "'>"
@@ -84,7 +90,7 @@ public class NflList extends HttpServlet {
                     + "<input type='submit' class='btnbuy' value='Book tickets'></form></td>");
 
             pw.print("</tr>");
-        }
+        }}
         pw.print("</table></div></div></div><div class='clear'></div>");
 
         utility.printHtml("Footer.html");

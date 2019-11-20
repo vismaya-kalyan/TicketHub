@@ -18,7 +18,7 @@ public class Nfl extends HttpServlet {
     private String matchState;
     private String teamOne;
     private String teamTwo;
-    private String matchDate;
+    private Date matchDate;
     private Double minPrice;
     private Double maxPrice;
 
@@ -27,7 +27,7 @@ public class Nfl extends HttpServlet {
     }
 
     public Nfl(String matchCategory, String matchName, String matchStadium, String matchCity, String matchState,
-            String teamOne, String teamTwo, String matchDate, Double minPrice, Double maxPrice) {
+            String teamOne, String teamTwo, Date matchDate, Double minPrice, Double maxPrice) {
 
         this.matchCategory = matchCategory;
         this.matchName = matchName;
@@ -105,11 +105,11 @@ public class Nfl extends HttpServlet {
         this.teamTwo = teamTwo;
     }
 
-    public String getMatchDate() {
+    public Date getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(String matchDate) {
+    public void setMatchDate(Date matchDate) {
         this.matchDate = matchDate;
     }
 

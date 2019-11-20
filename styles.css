@@ -43,6 +43,7 @@ table.gridtable {
 	border-width: 1px;
 	border-color: #666666;
 	border-collapse: collapse;
+	margin-left: 10px;
 }
 
 /* Decoration for Cart Details with Table Head Tags */
