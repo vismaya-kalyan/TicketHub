@@ -41,13 +41,18 @@ public class City extends HttpServlet {
         utility.printHtml("LeftNavigationBar.html");
         pw.print("<div id='content' class='two-column'><div class='post'><h2 class='title meta'>");
         pw.print("<h2 style='font-size: 24px;'>Cities</h2>");
-        pw.print("</h2><div class='entry'>");
+        pw.print("</h2><div class='entry'><table class='gridtable'>");
 
         for (int i = 0; i < cities.size(); i++) {
 
-            pw.print("<h5><a href= 'SpecificCity?matchcity=" + cities.get(i) + "'>" + cities.get(i) + "</a></h5><br>");
+            pw.print("<tr style='border:white;text-decoration:none'>");
+            pw.print("<td style='border:white;text-decoration:none'>");
+            pw.print("<h5 style='margin-top: 2px;margin-bottom: 2px;text-decoration:none !important;'><a  style='text-decoration:none !important;' href= 'SpecificCity?matchcity=" + cities.get(i) + "'>" + cities.get(i) + "</a></h5>");
+            pw.print("</td></tr>");
+
+            // pw.print("<h5><a href= 'SpecificCity?matchcity=" + cities.get(i) + "'>" + cities.get(i) + "</a></h5><br>");
         }
-        pw.print("</div></div></div><div class='clear'></div>");
+        pw.print("</table></div></div></div><div class='clear'></div>");
         utility.printHtml("Footer.html");
 
     }

@@ -600,12 +600,14 @@ footer .footer-content li {
 }
 
 footer .footer-content li a, footer .footer-content h4 {
+
 }
 
 footer .footer-content li a {
  color: #505050;
 	border-bottom-color:#505050;
-    font-size: 0.9em;
+	font-size: 0.9em;
+	text-decoration: none;
 }
 
 footer .footer-content li a:hover { 

@@ -57,7 +57,7 @@ public class NflList extends HttpServlet {
         pw.print("<a style='font-size: 24px;'>NFL</a>");
         pw.print("</h2><div class='entry'><table id='bestseller'>");
 
-        System.out.println("Hash map to loop for + "+hm.get("matchDate"));
+        
         for (Map.Entry<Date, Nfl> entry : sortedMap.entrySet()) {
             if (entry.getKey().after(dateOne)) {
             Nfl nfl = entry.getValue();
