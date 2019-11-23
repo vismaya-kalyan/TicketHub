@@ -3,6 +3,22 @@
 
 
             <ul>
+
+            <li class="bg">
+                    <em style="color: #3882D6; font-size: 1.4em;font-style: normal;">Search Teams </em><br>
+                    
+                    <div style="float: right; width: 100%;background-color: #f0f0f0 ">
+                            
+                            <div name="autofillform">
+                                <input type="text" name="searchId" value="" class="input"
+                                    id="searchId" onkeyup="doCompletion()" 
+                                    placeholder="search here.." style="padding: 5px; font-size: 16px;color:black; width:100%" />
+                                <div id="auto-row">
+                                    <table id="complete-table" class="gridtable"
+                                        style="position: absolute; width: 315px; font: outline;"></table>
+                    </div>
+                
+                </li>
                 <li>
                     <h4>TOP TEAMS</h4>
                     <ul class="blocklist">
@@ -13,19 +29,7 @@
                         <li><a href="#">Los Angeles Chargers*</a></li>
                     </ul>
                 </li>
-                <li>
-                    <h4>Search site</h4>
-                    <ul>
-                        <li class="text">
-                            <form method="get" class="searchform" action="#">
-                                <p>
-                                    <input class ="search" type="text" size="30" value="" name="s" class="s" />
 
-                                </p>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
 
                 <li class="bg">
                     <h4>About us</h4>

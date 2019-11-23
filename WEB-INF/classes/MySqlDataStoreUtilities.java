@@ -448,4 +448,30 @@ public class MySqlDataStoreUtilities {
         return hm;
     }
 
+    public static HashMap<String, Matches> getTeamMatches(String team) {
+        HashMap<String, Matches> hm = new HashMap<String, Matches>();
+        try {
+            getConnection();
+
+            String selectMatches = "select * from  matchlist where teamOne=? or teamTwo=?;";
+            PreparedStatement pst = conn.prepareStatement(selectMatches);
+            pst.setString(1, team);
+            pst.setString(2, team);
+            ResultSet rs = pst.executeQuery();
+            // System.out.println("rs" + rs);
+            while (rs.next()) {
+                Matches nfl = new Matches(rs.getString("matchCategory"), rs.getString("matchName"),
+                        rs.getString("matchStadium"), rs.getString("matchCity"), rs.getString("matchState"),
+                        rs.getString("teamOne"), rs.getString("teamTwo"), rs.getString("matchDate"),
+                        rs.getDouble("minPrice"), rs.getDouble("maxPrice"));
+                hm.put(rs.getString("matchId"), nfl);
+                nfl.setMatchId(rs.getInt("matchId"));
+
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return hm;
+    }
+
 }
